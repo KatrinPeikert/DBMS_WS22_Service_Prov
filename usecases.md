@@ -1,7 +1,7 @@
 * suche (name, section)
-** erstelle, wenn nichts gefunden wird
+* * erstelle, wenn nichts gefunden wird
 * Bewerte
-** Vote Bewertung
+* * Vote Bewertung
 
 * register
 * login
