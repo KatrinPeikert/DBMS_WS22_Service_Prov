@@ -1,0 +1,22 @@
+[
+    {
+        "uid": 1,
+        "login": "user1",
+        "pw": "24c9e15e52afc47c225b757e7bee1f9d"
+    },
+    {
+        "uid": 2,
+        "login": "user2",
+        "pw": "7e58d63b60197ceb55a1c487989a3720"
+    },
+    {
+        "uid": 3,
+        "login": "user3",
+        "pw": "92877af70a45fd6a2ed7fe81e1236b78"
+    },
+    {
+        "uid": 4,
+        "fname": "anon",
+        "pw": ""
+    }
+]
