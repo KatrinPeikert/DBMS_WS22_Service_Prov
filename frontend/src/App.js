@@ -1,13 +1,19 @@
 import logo from './logo.svg';
-import React, { useState, useEffect } from "react";
 import './App.css';
-import {getServices}  from "./flaskApiReqests";
+import { useState, useEffect } from "react";
 
 function App() {
-  const response = getServices("Euronycs", "Technology");
-  console.log(response)
 
+  const request = new Request('http://127.0.0.1:5000/api/getServices/', {method: 'POST', body: '{"name": "jan"}'}); //
 
+  console.log('fetching api:', request)
+  useEffect(() => {
+    fetch(request)
+    .then((response) => response.json())
+    .then((actualData) => console.log(actualData));
+   }, []);
+  //const call = fetch('/getServices');
+  //console.log(call);
   return (
     <div className="App">
       <header className="App-header">
@@ -22,11 +28,11 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
 
+        </a>
       </header>
     </div>
   );
 }
-//        <p>{{__html: response}}</p>
+
 export default App;
