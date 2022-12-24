@@ -1,4 +1,4 @@
-* suche (name, section)
+* suche (name, section)  -> \frontend\src\flaskApiReqests.js: getServices()
   * erstelle, wenn nichts gefunden wird
 * Bewerte
   * Vote Bewertung
