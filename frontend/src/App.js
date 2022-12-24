@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 function App() {
 
-  const request = new Request('http://127.0.0.1:5000/api/getServices/', {method: 'POST', body: '{"name": "jan"}'}); //
+  const request = new Request('http://127.0.0.1:5000/api/getServices/'); //, {method: 'POST', body: '{"name": "jan"}'}
 
   console.log('fetching api:', request)
   useEffect(() => {

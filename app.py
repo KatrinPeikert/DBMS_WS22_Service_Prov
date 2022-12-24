@@ -13,8 +13,11 @@ def show_user(user_name = "user1"):
 
 
 @website.route("/api/getServices/", methods=['POST','GET', 'OPTIONS'])
-@cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
+#@cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
 def getServices(name="No name given", sector="no sector given"):
-    if request.values['name'] is not None:
-        name = request.values['name']
+    ## hiermit geht es über den browser, über z.b. 
+    #http://localhost:5000/api/getServices/?name=Jan
+    #aber irgendwie nocht über GET/POST in React--
+    ##if request.values['name'] != None:
+    ##    name = request.values['name']
     return {"name": name, "sector": sector}
