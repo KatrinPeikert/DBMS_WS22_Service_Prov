@@ -1,6 +1,6 @@
 [
     {
-        "sid": "service1",
+        "sid": 1,
         "name": "Euronycs",
         "sector": "Technology",
         "address": [
@@ -14,7 +14,7 @@
         "store_manager": "Max Miller"
     },
     {
-        "sid": "service2",
+        "sid": 2,
         "name": "Burger4U",
         "sector": "Food",
         "address": [

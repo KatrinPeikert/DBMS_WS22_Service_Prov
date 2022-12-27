@@ -1,6 +1,20 @@
 from pymongo import MongoClient
 from hashlib import md5
+from Levenshtein import distance as dist
 
+
+def fuzzy_word_similarity(search_string:str, documents:list) -> list :
+    """ Checks fuzzy similarity between search_string and the 
+    names of service providers in all document of Services Collection. 
+    Returns Top 10 closest matches to search_string
+    """
+    fuzzy_sim = []
+    for doc in documents:
+        serv_p = doc["name"]
+        fuzzy_sim.append((dist(search_string, serv_p), doc ))
+    fuzzy_sim.sort()
+    result = [i[1] for i in fuzzy_sim[:10]]
+    return result
 
 class Database:
 
@@ -37,27 +51,49 @@ class Database:
         else:
             return False 
 
-    def get_service_prov(self, name: str) -> dict:
+    def get_service_prov(self, name: str) -> list:
         """Checks if there exists a service provider by the given name. 
             Returns its data when it does, else returns None
         """
-        return
+        service_exists = self.db.Services.count_documents({"name": name})
+        if not(service_exists):
+            all_documents = self.db.Services.find()
+            sorted_by_similarity = fuzzy_word_similarity(name, all_documents)
+            return sorted_by_similarity
+        else:
+            return [self.db.Services.find({"name": name})[0]]
 
     def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> bool:
         """Creates a new Service Provider with given data
         """
-        return
+        service_id = self.db.Services.find().sort('sid', -1).limit(1)[0]['sid'] + 1
+        data = {"sid": service_id, "name": name, "address":address, "sector":sector}
+        for key in additional_info.keys():
+            if not(key in data.keys()):
+                data[key] = additional_info[key]
+        self.db.Services.insert_one(data)
+        return True
     
-    def get_reviews(self, service_id: str) -> list:
-        """Finds all existing reviews for a Serive Provider identified by their ID
+    def get_reviews(self, service_id: int) -> list:
+        """Finds all existing reviews for a Service Provider identified by their ID
         """
-        return
+        reviews_exist = self.db.Reviews.count_documents({"id_service": service_id})
+        if not(reviews_exist):
+           return []
+        else:
+            return [doc for doc in self.db.Reviews.find({"id_service": service_id})]
+        
 
-    def add_new_review(self, service_id:str, user_id:str, text: str ) -> bool:
+    def add_new_review(self, service_id:int, user_id:int, text:str ) -> bool:
         """Adds a new Review with given input text to Service provider with 
-        service_id from uuer with given user_id
+        service_id from user with given user_id
         """
-        return
+        review_id = self.db.Reviews.find().sort('rid', -1).limit(1)[0]['rid'] + 1
+        user_name = self.db.User.find({"uid":user_id})[0]["login"]
+        data = {"rid":review_id,"user_id":user_id, "login_user": user_name, "text":text, "id_service": service_id, 'usefulness_rate':0}
+
+        self.db.Reviews.insert_one(data)
+        return True
 
 #passwords = username
 
@@ -66,5 +102,12 @@ if __name__ == '__main__':
     print('User testing:')
     user = db.get_user_data('user1', 'user1')
     print(f'User information: {user}')
-    db.set_user("mueller", "mueller")
-
+    #db.set_user("mueller", "mueller")
+    print("Check Services")
+    print(db.get_service_prov("Burger4F"))
+    print("Add Services")
+    #print(db.set_service_prov(name="Patisserie Antoinette", address={"street": "Pariser Allee", "number": 16, "area_code": 45678, "city": "Frankfurt"},sector="Food", additional_info={"store_owner": "Maria Schmitz"}))
+    print("Check Reviews")
+    print(db.get_reviews(service_id=1))
+    print("Add Review")
+    #print(db.add_new_review(3,2, "Love the Cake!"))

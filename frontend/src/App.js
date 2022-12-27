@@ -9,9 +9,9 @@ function App() {
   console.log('fetching api:', request)
   useEffect(() => {
     fetch(request)
-    .then((response) => response.json())
-    .then((actualData) => console.log(actualData));
-   }, []);
+      .then((response) => response.json())
+      .then((actualData) => console.log(actualData));
+  }, []);
   //const call = fetch('/getServices');
   //console.log(call);
   return (

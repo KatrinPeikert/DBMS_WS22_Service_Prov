@@ -1,16 +1,18 @@
 [
     {
         "rid": 1,
-        "id_user": "user1",
+        "user_id": 1,
+        "login_user": "user1",
         "text": "Their products are really great",
-        "id_service": "service1",
+        "id_service": 1,
         "usefulness_rate": 5
     },
     {
         "rid": 2,
-        "id_user": "user1",
+        "user_id": 1,
+        "login_user": "user1",
         "text": "delivery took too long",
-        "id_service": "service2",
+        "id_service": 2,
         "usefulness_rate": 2
     }
 ]
