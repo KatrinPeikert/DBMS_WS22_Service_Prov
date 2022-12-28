@@ -18,10 +18,3 @@ function App() {
 }
 
 export default App;
-
-/*
-        <Routes>
-          <Route path="/" elemtent={<FrontPage />}></Route>
-          <Route path="/:id" elemtent={<LoginPage />}></Route>
-      </Routes>     
-*/

@@ -4,12 +4,14 @@ import Form from 'react-bootstrap/Form';
 
 import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import { Navigate } from 'react-router-dom';
 
 export default function SearchPage() {
   const [name, setName] = useState("");
   const [sector, setSector] = useState("");
 
   const handleSubmit = (event) => {
+    //build api request from form
     event.preventDefault();
     console.log("handle submit!")
       const request = 'http://127.0.0.1:5000/api/getServices?' + new URLSearchParams({
@@ -34,13 +36,13 @@ return (
      <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formName">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+        <Form.Control type="text" required value={name} onChange={(e) => setName(e.target.value)}/>
         <Form.Text className="text-muted" >
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formSector">
         <Form.Label>Sector</Form.Label>
-        <Form.Control type="text" value={sector} onChange={(e) => setSector(e.target.value)} />
+        <Form.Control type="text" required value={sector} onChange={(e) => setSector(e.target.value)} />
         <Form.Text className="text-muted">
         </Form.Text>
       </Form.Group>
