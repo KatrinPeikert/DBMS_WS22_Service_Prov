@@ -1,19 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from "react";
+import Axios from "axios"
+//const axios = require('axios');
 
 function App() {
-
-  const request = new Request('http://127.0.0.1:5000/api/getServices/'); //, {method: 'POST', body: '{"name": "jan"}'}
-
-  console.log('fetching api:', request)
-  useEffect(() => {
-    fetch(request)
-    .then((response) => response.json())
-    .then((actualData) => console.log(actualData));
-   }, []);
-  //const call = fetch('/getServices');
-  //console.log(call);
+  const request = '/api/getServices?' + new URLSearchParams({
+    name: 'Testname',
+    sector: 2,
+});
+console.log('request:', request);
+  const response = fetch(request)
+  .then(function (response) {
+    console.log(response.json());
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  console.log(response.name);
+ 
   return (
     <div className="App">
       <header className="App-header">
