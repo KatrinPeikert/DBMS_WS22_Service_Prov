@@ -20,7 +20,7 @@ const Services = () =>{
 
             }
             fetchAllServices();
-    }, []);
+    }, ); //evtl muss hier ein [] ans ende
     return <div>
         <h1>Result:</h1>
     {services.name}, {services.sector}
