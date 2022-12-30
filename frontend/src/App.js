@@ -6,7 +6,7 @@ import LoginPage from "./pages/login"
 import SearchPage from"./pages/search"
 import AddService from"./pages/addservice"
 import PageNotFound from"./pages/PageNotFound"
-import Services from "./pages/queryResultList"
+import GetServices from "./pages/queryResultList"
 
 import Layout from './components/Layout';
 
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FrontPage />}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
-        <Route path="/result/query/:name/:sector" element={<Services />}></Route>
+        <Route path="/result/query/:name/:sector" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
 
