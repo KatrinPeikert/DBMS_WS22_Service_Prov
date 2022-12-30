@@ -5,8 +5,11 @@ import App from './App';
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import reportWebVitals from './reportWebVitals';
+import cors from "cors";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+cors()
 root.render(
   <React.StrictMode>
   <BrowserRouter>
