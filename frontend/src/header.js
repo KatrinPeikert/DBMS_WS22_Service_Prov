@@ -6,12 +6,11 @@ import Nav from 'react-bootstrap/Nav';
 
 export default function Header() {  
 
-    return ( <header>
+    return ( <header>        <Container>
+              <h1 >Site-Title</h1>
+
         <Navbar bg="primary" variant="bright">
-        <Container>
-   
-              <Nav variant="tabs">    
-            <h1>Site-Title</h1>
+            <Nav variant="tabs">    
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
@@ -20,8 +19,8 @@ export default function Header() {
           </Nav>
          
 
-        </Container>
       </Navbar>
+      </Container>
 
       </header>)}
 
