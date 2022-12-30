@@ -17,12 +17,37 @@ def show_user(user_name = "user1"):
 @cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
 def getServices():
     if request.values['name'] != None:
-        name = request.values['name']
+        response =  db.get_service_prov(request.values['name'])
     else:
-        name = "error"
-    if request.values['name'] != None:
-        sector = request.values['sector']
+        response = {"message": "error"}  
+    response = jsonify(response)
+    return response
+
+
+@website.route("/api/addServices/", methods=['GET','POST'])
+@cross_origin(allow_headers=['Content-Type']) 
+def addServices(name, sector):    
+    return jsonify({"id": 1, "name":name})
+
+
+@website.after_request
+def after_request(response):
+    """Buids request Header for CORS response
+    by https://kurianbenoy.com/2021-07-04-CORS/
+    Args:
+        response (_type_): _description_
+    Returns:
+        _type_: _description_
+    """
+    allowed_origins= ['http://127.0.0.1:3000','http://localhost']
+    if allowed_origins == "*":
+            response.headers['Access-Control-Allow-Origin'] = "*"
     else:
-        sector="error"
-    response = jsonify({'name': name, 'sector':sector})
+            assert request.headers['Host']
+            if request.headers.get("Origin"):
+                response.headers["Access-Control-Allow-Origin"]  = request.headers["Origin"]
+            else:
+                for origin in allowed_origins:
+                    if origin.find(request.headers["Host"]) != -1:
+                        response.headers["Access-Control-Allow-Origin"] = origin
     return response

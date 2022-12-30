@@ -11,12 +11,15 @@ const AddService = () => {
   });
   const changeHandler = (e) =>{
     setService(prev=>({...prev, [e.target.name]: e.target.value }))
-    navigate("/");
   };
   const clickHander = async(e) =>{
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/addService/", Service)
+      const request = 'http://127.0.0.1:5000/api/addServices?' + new URLSearchParams({
+        name: Service.name,
+        sector: Service.sector,
+        });
+      await axios.post(request);
     } catch (error) {
       console.log(error);
       
