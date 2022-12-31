@@ -1,11 +1,11 @@
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes ,Route,useParams } from "react-router-dom"
-import FrontPage  from "./pages/frontpage"
+import { Routes, Route, useParams } from "react-router-dom"
+import FrontPage from "./pages/frontpage"
 import LoginPage from "./pages/login"
-import SearchPage from"./pages/search"
-import AddService from"./pages/addservice"
-import PageNotFound from"./pages/PageNotFound"
+import SearchPage from "./pages/search"
+import AddService from "./pages/addservice"
+import PageNotFound from "./pages/PageNotFound"
 import Services from "./pages/queryResultList"
 
 import Layout from './components/Layout';
@@ -13,7 +13,7 @@ import Layout from './components/Layout';
 function App() {
   return (
 
-    <Layout>  
+    <Layout>
       <Routes>
         <Route path="/" element={<FrontPage />}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
@@ -23,10 +23,10 @@ function App() {
 
         <Route path="/*" element={<PageNotFound />}></Route>
 
-       </Routes>
+      </Routes>
     </Layout>
 
-    
-    )
+
+  )
 }
 export default App;
