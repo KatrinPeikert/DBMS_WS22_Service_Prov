@@ -1,12 +1,15 @@
+import auth
 from flask import Flask, render_template, request, redirect, url_for, g, session, flash, jsonify
 from DatabaseAPI import Database
 from flask_cors import cross_origin #for api-access from react
 
 db = Database()
 website = Flask(__name__)
+website.register_blueprint(auth.auth)
+website.secret_key = 'this is a very secret key'
 
 
-
+    
 @website.route("/")
 def show_user(user_name = "user1"):
     user = db.get_user_data(login=user_name, pw=user_name)
