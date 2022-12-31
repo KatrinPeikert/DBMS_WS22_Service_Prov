@@ -22,34 +22,7 @@ def getServices():
     if request.values['name'] != None:        
         response =  db.get_service_prov(request.values['name'])
     else:
-        response = {"message": "error"}  
-    response =[{
-        "sid": 1,
-        "name": "Euronycs",
-        "sector": "Technology",
-        "address": [
-            {
-                "street": "Hauptstraße",
-                "number": 1,
-                "area_code": 123456,
-                "city": "Neustadt"
-            }
-        ],
-        "store_manager": "Max Miller"
-    },
-    {
-        "sid": 2,
-        "name": "Burger4U",
-        "sector": "Food",
-        "address": [
-            {
-                "street": "Frankfurter Straße",
-                "number": 49,
-                "area_code": 654321,
-                "city": "Berlin"
-            }
-        ]
-    }]
+        response = {"message": "error"}    
     response = jsonify({"status": "OK", "result":response})
     return response
 
