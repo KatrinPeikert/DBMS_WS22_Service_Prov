@@ -9,10 +9,13 @@ import {
     Link,
     useParams
   } from "react-router-dom";
-const Services = () =>{
-    const { name, sector} = useParams();                             
+const GetServices = () =>{
     cors()
-    const [services, setServices] = useState([]);
+
+    const {  name, sector} = useParams(); //given params to perform query
+    const [services, setServices] = useState([]); //Database response
+
+
     useEffect(() => {
             const fetchAllServices = async () => {
                 try {
@@ -23,33 +26,45 @@ const Services = () =>{
                     console.log("Api request: ", request);
                     const res = await axios.get(request,{
                         headers: {
-                           authorization: null ,
+                           authorization: null , //das kann glaub ich raus
                            'Content-Type': 'application/json'
                         }}) ;
 
                     console.log(res)
-                    setServices(res.data)
+                    setServices(res.data.result)
                 } catch (error) {
                     console.log(error); 
                 }
 
             }
             fetchAllServices();
-    },[] ); //evtl muss hier ein [] ans ende
+    },[name, sector] ); //evtl muss hier ein [] ans ende
+    console.log("services: ", services)
     console.log(services)
-    if (services.length===0){
+    if (services.result===0){
         return <p>No Services found.<br />
         <Link to ="/search">go back</Link><br />
         Or <Link to ="/addService">create a new service</Link><br />
         </p> 
     }
+    else{
     return <div>
         <h1>Result:</h1>
         Serched service with name ={name} and sector={sector}.<br />
-    {services.name}, {services.sector}
-    {services}
+        <div>
+        <table>
+                <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Sector</th>
+                </tr>
+        {services.map((s, key) => <tr key={key}><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td></tr>)}
+    </table>
+    </div>
+    
 
     </div>
 }
-
-export default Services;
+}
+export default GetServices;
+      
