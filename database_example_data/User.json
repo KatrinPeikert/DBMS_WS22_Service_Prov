@@ -16,7 +16,7 @@
     },
     {
         "uid": 4,
-        "fname": "anon",
-        "pw": ""
+        "login": "anon",
+        "pw": "anon"
     }
 ]

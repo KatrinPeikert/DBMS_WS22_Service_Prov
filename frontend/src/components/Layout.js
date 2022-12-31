@@ -29,15 +29,17 @@ const Main = styled.main`
 
 
 const Layout = ({ children }) => {
-    return (
-    <React.Fragment>
-        <Header />
-        <Wrapper>
-        <Navigation />
 
-            <Main>{children}</Main>
-        </Wrapper>
-    </React.Fragment>
+
+    return (
+        <React.Fragment>
+            <Header />
+            <Wrapper>
+                <Navigation />
+
+                <Main>{children}</Main>
+            </Wrapper>
+        </React.Fragment>
     );
 };
 export default Layout;

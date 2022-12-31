@@ -28,7 +28,10 @@ class Database:
 
     def get_user(self, login: str, pw: str):
         """Return true if user:pw exists in db"""
-        pw_hash = md5(pw.encode()).hexdigest()
+        if login == "anon":
+            pw_hash = pw
+        else:
+            pw_hash = md5(pw.encode()).hexdigest()
         return self.db.User.find_one({'login': login, 'pw': pw_hash})
 
     def get_user_by_id(self, uid):
@@ -100,14 +103,14 @@ class Database:
 if __name__ == '__main__':
     db = Database()
     print('User testing:')
-    user = db.get_user_data('user1', 'user1')
+    user = db.get_user_data('anon', 'anon')
     print(f'User information: {user}')
     #db.set_user("mueller", "mueller")
     print("Check Services")
-    print(db.get_service_prov("Burger4F"))
+    print(db.get_service_prov("Euronycs"))
     print("Add Services")
     #print(db.set_service_prov(name="Patisserie Antoinette", address={"street": "Pariser Allee", "number": 16, "area_code": 45678, "city": "Frankfurt"},sector="Food", additional_info={"store_owner": "Maria Schmitz"}))
     print("Check Reviews")
-    print(db.get_reviews(service_id=1))
+    #print(db.get_reviews(service_id=1))
     print("Add Review")
     #print(db.add_new_review(3,2, "Love the Cake!"))
