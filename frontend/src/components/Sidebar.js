@@ -49,6 +49,9 @@ const Sidebar = () => {
                 <Link to="/search">Search</Link>
                 </li>
                 <li>
+                <Link to="/addService">Add a new Service</Link>
+                </li>
+                <li>
                 <Link to="/login">Login</Link>
                 </li>
                 <li>

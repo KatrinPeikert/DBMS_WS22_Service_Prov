@@ -64,7 +64,20 @@ class Database:
             sorted_by_similarity = fuzzy_word_similarity(name, all_documents)
             return sorted_by_similarity
         else:
-            return [self.db.Services.find({"name": name})[0]]
+            return [self.db.Services.find({"name": name})]
+    
+    def get_service_prov_by_sector(self, sector: str) -> list:
+        """Checks if there exists a service provider by the given sector. 
+            Returns its data when it does, else returns None
+        """
+        return [self.db.Services.find({"sector": sector})]
+        
+    def get_service_prov_by_id(self, id: int) -> dict:
+        """Checks if there exists a service provider with the given id. 
+            Returns its data when it does, else returns None
+        """   
+        return self.db.Services.find({"sid": id})
+        
 
     def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> bool:
         """Creates a new Service Provider with given data

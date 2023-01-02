@@ -2,6 +2,7 @@ import auth
 from flask import Flask, render_template, request, redirect, url_for, g, session, flash, jsonify
 from DatabaseAPI import Database
 from flask_cors import cross_origin #for api-access from react
+from bson import json_util
 
 db = Database()
 website = Flask(__name__)
@@ -22,9 +23,19 @@ def getServices():
     if request.values['name'] != None:        
         response =  db.get_service_prov(request.values['name'])
     else:
-        response = {"message": "error"}    
-    response = jsonify({"status": "OK", "result":response})
+        response = {"status": "error"}   
+    response = json_util.dumps(response)
     return response
+   
+   
+@website.route("/api/getServiceById/", methods=['GET'])
+@cross_origin(allow_headers=['Content-Type']) 
+def get_service_by_id():    
+    if request.values['service_id'] != None:
+        response = db.get_reviews(request.values['service_id'])    
+    
+
+    
 
 
 @website.route("/api/addServices/", methods=['GET','POST'])

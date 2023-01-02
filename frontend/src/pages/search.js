@@ -15,11 +15,10 @@ const SearchPage = () => {
   };
 
 
-  const handleSubmit =  (event) => {
+  const handleSubmitName =  (event) => {
     //build api request from form
     event.preventDefault();
-    console.log("handle submit!")
-    navigate("/result/query/" +query.name + "/"+query.sector )
+    navigate("/query/name/" +query.name )
     /*
     const request = 'http://127.0.0.1:5000/api/getServices?' + new URLSearchParams({
     name: query.name,
@@ -35,16 +34,29 @@ const SearchPage = () => {
     */
 
   }
+  const handleSubmitSector=  (event) => {
+    event.preventDefault();
+    navigate("/query/sector/" +query.sector )
+
+  }
 
 return (
   <>
-     <Form onSubmit={handleSubmit}>
+     <h2> Search by name:</h2>
+     <Form onSubmit={handleSubmitName}>
       <Form.Group className="mb-3" controlId="formName">
         <Form.Label>Name</Form.Label>
         <Form.Control type="text" required name="name" value={query.name} onChange={changeHandler}/>
         <Form.Text className="text-muted" >
         </Form.Text>
       </Form.Group>
+      <Button variant="primary" type="submit">
+        Search
+      </Button>
+    </Form>
+    <h2> Search by sector:</h2>
+    <Form onSubmit={handleSubmitSector}>
+
       <Form.Group className="mb-3" controlId="formSector">
         <Form.Label>Sector</Form.Label>
         <Form.Control type="text" required name="sector" value={query.sector} onChange={changeHandler} />
