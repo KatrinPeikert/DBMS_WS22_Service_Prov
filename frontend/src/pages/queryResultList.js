@@ -13,15 +13,26 @@ import DetailsButton from "../components/DetailsButton"
 const GetServices = () =>{
     cors()
 
-    const {type, name} = useParams(); //given params to perform query
+    const {type, keyword} = useParams(); //given params to perform query
     const [services, setServices] = useState([]); //Database response
-
+    console.log(type, keyword)
     useEffect(() => {
             const fetchAllServices = async () => {
                 try {
-                    const request = 'http://127.0.0.1:5000/api/getServices?' + new URLSearchParams({
-                    name: name,
-                    });
+                    var request = ""
+                    if (type==="name"){
+                        request = 'http://127.0.0.1:5000/api/getServices?' + new URLSearchParams({
+                            name: keyword,
+                            });                    
+                    }
+
+                    else if (type==="sector") {
+                        request = 'http://127.0.0.1:5000/api/getServicesBySector?' + new URLSearchParams({
+                            sector: keyword,
+                            });
+
+                        }
+         
                     console.log("Api request: ", request);
                     const res = await axios.get(request,{
                         headers: {
@@ -30,18 +41,20 @@ const GetServices = () =>{
                         }}) ;
 
                     console.log("res", res)
-                    setServices(res)
-                } catch (error) {
+                    setServices(res)}
+                    
+                     
+                 catch (error) {
                     console.log("error", error); 
                 }
 
             }
             fetchAllServices();
-    },[type, name] ); //evtl muss hier ein [] ans ende
+    },[type, keyword] ); //evtl muss hier ein [] ans ende
     console.log("services: ", services)
     console.log(services)
 
-    if (services.length !== 0){    
+    try{  
             return <div>
                 <h1>Result:</h1>
                 <br />
@@ -65,7 +78,7 @@ const GetServices = () =>{
                 </div> 
                 </div>
     }
-    else {
+    catch {
         return <p>No Services found.<br />
         <Link to ="/search">go back</Link><br />
         Or <Link to ="/addService">create a new service</Link><br />

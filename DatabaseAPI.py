@@ -70,7 +70,12 @@ class Database:
         """Checks if there exists a service provider by the given sector. 
             Returns its data when it does, else returns None
         """
-        return [self.db.Services.find({"sector": sector})]
+        response =list(self.db.Services.find({"sector": sector}))
+        if response[0] is not None:       
+
+            return [response]
+        else:
+            return None
         
     def get_service_prov_by_id(self, id: int) -> dict:
         """Checks if there exists a service provider with the given id. 
