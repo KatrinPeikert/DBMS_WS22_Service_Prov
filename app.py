@@ -31,18 +31,50 @@ def getServices():
 @website.route("/api/getServiceById/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) 
 def get_service_by_id():    
-    if request.values['service_id'] != None:
-        response = db.get_reviews(request.values['service_id'])    
+    try:
+        response = db.get_service_prov_by_id(int(request.values['service_id']))    
+        response = json_util.dumps(response)
+        return response
+    except:
+        response = {"status": "error"}   
     
-
-    
-
-
-@website.route("/api/addServices/", methods=['GET','POST'])
+@website.route("/api/getReviewsByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) 
-def addServices():    
-    name = request.values['name']
-    return jsonify({"id": 1, "name":name})
+def get_reviews_by_id():    
+    try:
+        response = db.get_reviews(int(request.values['service_id']))    
+        response = json_util.dumps(response)
+        return response
+    except:
+        response = {"status": "error"}   
+    
+    
+
+
+@website.route("/api/addServices/", methods=['POST'])
+@cross_origin(allow_headers=['Content-Type']) 
+def addServices():
+    keys = ['name', 'street', 'no', 'zip', 'city', 'sector']
+    for k in keys:
+        if request.values[k] =='':
+            return {"status": "error", "val": k}   
+    
+    try:
+        result = db.set_service_prov(request.values['name'], {"street":request.values['street'],"number": request.values['no'], "area_code":request.values['zip'],"city":request.values['city'] },request.values['sector'] )
+        return {"status": "sucess"}
+    except:
+        return {"status": "unable to write to db." }  
+    
+    
+    
+@website.route("/api/addReview/", methods=['POST'])
+@cross_origin(allow_headers=['Content-Type']) 
+def add_review():
+    try:
+        db.add_new_review(int(request.values['service_id']),int(request.values['user_id']),request.values['text'])
+        return {"status": "OK" }  
+    except:
+        return {"status": "unable to write to db." }  
 
 
 @website.after_request

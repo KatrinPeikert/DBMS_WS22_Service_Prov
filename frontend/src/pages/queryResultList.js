@@ -7,6 +7,8 @@ import {
     useParams
   } from "react-router-dom";
 
+import Rating from "../components/Rating"  
+import DetailsButton from "../components/DetailsButton"  
 
 const GetServices = () =>{
     cors()
@@ -39,7 +41,7 @@ const GetServices = () =>{
     console.log("services: ", services)
     console.log(services)
 
-    if (true){    
+    if (services.length !== 0){    
             return <div>
                 <h1>Result:</h1>
                 <br />
@@ -57,7 +59,7 @@ const GetServices = () =>{
                         </tr>
                 </thead>
                 <tbody>
-                {services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td><td></td></tr>  )}
+                {services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td><td><Rating /></td><td><DetailsButton id={s.sid}/></td></tr>  )}
                 </tbody>
                 </table>
                 </div> 
@@ -72,6 +74,5 @@ const GetServices = () =>{
     }
 //{services.data.sid}
 export default GetServices;
-
+//
 //{services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td>asd<td></td></tr>  )}
-//<td><Link to="/"> Link</Link> </td>

@@ -83,7 +83,7 @@ class Database:
         """Creates a new Service Provider with given data
         """
         service_id = self.db.Services.find().sort('sid', -1).limit(1)[0]['sid'] + 1
-        data = {"sid": service_id, "name": name, "address":address, "sector":sector}
+        data = {"sid": service_id, "name": name, "address":[address], "sector":sector}
         for key in additional_info.keys():
             if not(key in data.keys()):
                 data[key] = additional_info[key]
