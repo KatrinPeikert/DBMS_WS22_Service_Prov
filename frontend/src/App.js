@@ -16,10 +16,10 @@ import useToken from './components/App/useToken.js';
 import Login from './components/Login/Login';
 
 function App() {
-  //const { token, setToken } = useToken();
-  //if ((!token) || (token === "invalid_user")) {
-  //  return <Login setToken={setToken} />
-  //}
+  const { token, setToken } = useToken();
+  if ((!token) || (token === "invalid_user")) {
+    return <Login setToken={setToken} />
+  }
   return (
    
     <Layout>
