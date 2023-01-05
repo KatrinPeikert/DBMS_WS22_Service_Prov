@@ -14,7 +14,7 @@ const StarRatingButton = (probs) =>{
         setRating(index);
         console.log(hover)
         try {
-            const request = 'http://127.0.0.1:5000/api/addServices?' + new URLSearchParams({
+            const request = 'http://127.0.0.1:5000/api/addStarRating/?' + new URLSearchParams({
                 user_id: 1, ////////////////
                 user_name: "user1", ///////////////////
                 service_id: serviceId,
