@@ -12,8 +12,7 @@ const FuzzyWordList = (probs) =>{
             </>
         } catch (error) {
             return <></>
-        }
-      
+        }      
     }
 }
 export default FuzzyWordList;
