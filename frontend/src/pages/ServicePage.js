@@ -6,6 +6,7 @@ import axios from "axios";
 
 import ReviewList from "../components/ReviewList"
 import WriteComment from "../components/WriteComment"
+import StarRatingButton from "../components/StarRatingbutton"
 
 const ServicePage =  () =>{
     const {id} = useParams(); //given params to perform query
@@ -62,6 +63,9 @@ const ServicePage =  () =>{
         <p>
         <h3>Address:</h3>
         {service.data[0].address[0].street} {service.data[0].address[0].number}, {service.data[0].address[0].area_code} {service.data[0].address[0].city}
+        </p>
+        <p>
+            <StarRatingButton serviceId={id} />
         </p>
         <h3>User comments:</h3>
         <ReviewList list ={reviews.data} />
