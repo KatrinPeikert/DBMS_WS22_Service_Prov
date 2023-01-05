@@ -12,8 +12,10 @@ def fuzzy_word_similarity(search_string:str, documents:list) -> list :
     for doc in documents:
         serv_p = doc["name"]
         fuzzy_sim.append((dist(search_string, serv_p), doc ))
-    fuzzy_sim.sort()
-    result = [i[1] for i in fuzzy_sim[:10]]
+    fuzzy_sim.sort(key=lambda x: x[0])
+    result = list(dict.fromkeys(([i[1]['name'] for i in fuzzy_sim])))  #to get disitnct values
+    if len(result) > 10:
+        return result[:9]   
     return result
 
 class Database:

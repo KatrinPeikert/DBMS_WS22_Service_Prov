@@ -29,7 +29,6 @@ function App() {
         <Route path="/query/:type/:keyword/" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>
         <Route path="/service/:id" element={<ServicePage />}></Route>
-
         <Route path="/*" element={<PageNotFound />}></Route>
 
       </Routes>

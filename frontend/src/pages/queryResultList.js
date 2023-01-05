@@ -9,6 +9,7 @@ import {
 
 import Rating from "../components/Rating"  
 import DetailsButton from "../components/DetailsButton"  
+import FuzzyWordsList from "../components/FuzzyWordList"
 
 const GetServices = () =>{
     cors()
@@ -79,10 +80,11 @@ const GetServices = () =>{
                 </div>
     }
     catch {
-        return <p>No Services found.<br />
-        <Link to ="/search">go back</Link><br />
-        Or <Link to ="/addService">create a new service</Link><br />
-        </p> 
+        return <><h2>No Services found</h2><br /><br />
+        <FuzzyWordsList queryType={type} response={services.data}></FuzzyWordsList>
+        <p><Link to ="/search">Go back</Link><br />
+        <Link to ="/addService">Create a new service</Link><br />
+        </p> </>
     }
     }
 //{services.data.sid}
