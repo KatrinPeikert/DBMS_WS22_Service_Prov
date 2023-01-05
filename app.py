@@ -99,6 +99,10 @@ def add_star_rating():
         user_name = request.values['user_name']
         service_id = request.values['service_id']
         rating = int(request.values['rating'])
+        db.add_star_rating(user_id, service_id, rating)
+        return {
+            "status": "OK"
+        }
 
     except:
         return {
