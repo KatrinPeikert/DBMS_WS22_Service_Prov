@@ -3,7 +3,7 @@ from hashlib import md5
 from Levenshtein import distance as dist
 
 
-def fuzzy_word_similarity(search_string:str, documents:list) -> list :
+def fuzzy_word_similarity(search_string:str, documents:list) -> list:
     """ Checks fuzzy similarity between search_string and the 
     names of service providers in all document of Services Collection. 
     Returns Top 10 closest matches to search_string
@@ -12,12 +12,14 @@ def fuzzy_word_similarity(search_string:str, documents:list) -> list :
     for doc in documents:
         serv_p = doc["name"]
         fuzzy_sim.append((dist(search_string, serv_p), doc ))
-    fuzzy_sim.sort()
-    result = [i[1] for i in fuzzy_sim[:10]]
+    fuzzy_sim.sort(key=lambda x: x[0])
+    result = list(dict.fromkeys(([i[1]['name'] for i in fuzzy_sim])))  #to get disitnct values
+    if len(result) > 10:
+        return result[:9]   
     return result
 
 class Database:
-
+    
     def __init__(self, host: str = 'localhost', port: int = 27017, no_db=False):
         """Initiate database connection with given host and port.
         If none is given, use default settings on mongoDB installation."""
@@ -28,6 +30,7 @@ class Database:
 
     def get_user(self, login: str, pw: str):
         """Return true if user:pw exists in db"""
+        
         if login == "anon":
             pw_hash = pw
         else:
@@ -115,7 +118,28 @@ class Database:
 
         self.db.Reviews.insert_one(data)
         return True
+    
+    
+    
+    def add_star_rating(self, service_id: int, user_id: int, rating: int) -> bool:  
+        """Adds a rating field if not exists with user rating
+            if rating field exists, it will add or update a rating-obj for this user
+        """     
+        cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
+        if (len(cursor) > 0):
+            cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": user_id}}}))
+            print(cursor)
+            if (len(cursor) > 0):
+                print("user in db")
+                self.db.Services.update_one({"sid": service_id, "ratings.user_id":user_id}, {"$set": {"ratings.$.rating": rating}})
+            else:
+                self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": user_id, "rating": rating} } })
+                print(list(self.db.Services.find({ "sid": service_id})))
+        else:            
+            cursor = list(self.db.Services.find( {"sid": service_id})) 
+            self.db.Services.update_one({ "sid": service_id},  {"$set": { "ratings":[{"user_id": user_id, "rating": rating}] } })
 
+            
 #passwords = username
 
 if __name__ == '__main__':

@@ -90,6 +90,25 @@ def add_review():
         return {"status": "unable to write to db." }  
 
 
+    
+@website.route("/api/addStarRating/", methods=['POST'])
+@cross_origin(allow_headers=['Content-Type']) 
+def add_star_rating():
+    try:
+        user_id = request.values['user_id']
+        user_name = request.values['user_name']
+        service_id = request.values['service_id']
+        rating = int(request.values['rating'])
+        db.add_star_rating(user_id, service_id, rating)
+        return {
+            "status": "OK"
+        }
+
+    except:
+        return {
+            "status": "error"
+        }
+
 @website.after_request
 def after_request(response):
     """Buids request Header for CORS response
