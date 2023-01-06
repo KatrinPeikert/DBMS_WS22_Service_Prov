@@ -5,7 +5,7 @@ import { Routes, Route, useParams } from "react-router-dom"
 import FrontPage from "./pages/frontpage"
 //import LoginPage from "./pages/login"
 import SearchPage from "./pages/search"
-import AddService from "./pages/AddService"
+import AddService from "./pages/addservice"
 import PageNotFound from "./pages/PageNotFound"
 import GetServices from "./pages/queryResultList"
 import ServicePage from "./pages/ServicePage"
@@ -21,7 +21,7 @@ function App() {
     return <Login setToken={setToken} />
   }
   return (
-   
+
     <Layout>
       <Routes>
         <Route path="/" element={<FrontPage />}></Route>
