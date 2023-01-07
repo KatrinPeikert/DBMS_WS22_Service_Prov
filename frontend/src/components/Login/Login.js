@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import md5 from 'md5-hash'
 async function loginUser(credentials) {
     return fetch('/auth/send', {
         method: 'POST',
@@ -26,6 +26,12 @@ export default function LoginPage({ setToken }) {
             passw,
             isAnon
         });
+        //this will create a session key for anon:
+        //if (token.token===1){
+        //    token.token= 10000000000000000// {user_id:0,key: md5(Date())}
+        //}
+       
+        console.log("token", token)
         setToken(token);
         window.location.reload(false);
     }

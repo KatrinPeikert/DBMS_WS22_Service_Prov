@@ -3,7 +3,7 @@ export default function FrontPage(probs) {
 return (
   <>
   <h2>Frontpage</h2>
-  <p>Welcome user {probs.token} our page.</p>
+  <p>Welcome user no. {probs.token} to our page.</p>
   </>
 );
 }

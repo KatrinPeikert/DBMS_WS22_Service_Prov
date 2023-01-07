@@ -8,7 +8,6 @@ const StarRatingButton = (probs) =>{
     const serviceId = probs.serviceId;
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
-    const [click_num, setClick_num] = useState(1)
 
     const StarClickhandler = async (index) =>{
         setRating(index);
@@ -19,10 +18,9 @@ const StarRatingButton = (probs) =>{
                 service_id: serviceId,
                 rating: hover
               });
-              console.log(request)
-            const respone = await axios.post(request);
-            console.log(respone);
-            setClick_num(click_num +1)
+            await axios.post(request);
+            window.location.reload();
+
             }
         catch (error){
             console.log(error);

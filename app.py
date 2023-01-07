@@ -50,7 +50,8 @@ def get_service_by_id():
         return response
     except:
         response = {"status": "error"}   
-    
+ 
+"""    
 @website.route("/api/getReviewsByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) 
 def get_reviews_by_id():    
@@ -61,6 +62,7 @@ def get_reviews_by_id():
     except:
         response = {"status": "error"}   
     
+ """   
 @website.route("/api/getStarRatingByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
 def getStarRatingByID():
@@ -77,6 +79,7 @@ def getStarRatingByID():
             return {"rating": 0, "num_ratings": 0}
         except:
             return {"message": "error"}
+
 
 @website.route("/api/addServices/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
@@ -112,7 +115,7 @@ def add_star_rating_to_service():
         user_id = request.values['user_id']
         service_id = request.values['service_id']
         rating = request.values['rating']
-        db.add_star_rating(int(user_id), int(service_id), int(rating))
+        db.add_star_rating(int(user_id), int(service_id), int(rating), request.remote_add)
         return {
             "status": "OK",            
         }
@@ -121,21 +124,21 @@ def add_star_rating_to_service():
             "status": "error",
             "message": str(err)
         }
-        
+"""        
 @website.route("/api/get_usefulness_rate/", methods=['GET'])  
 @cross_origin(allow_headers=['Content-Type']) 
 def get_review_usefulness_rate():
     r_id = request.values['r_id']     
     num = db.get_usefulness_rate(r_id)
     return num
-
+"""
 @website.route("/api/addUsefullness/", methods=['POST'])  
 @cross_origin(allow_headers=['Content-Type']) 
 def update__usefulness_rate():
     try:
         r_id = request.values['r_id']     
-        user_id = request.values['r_id']    
-        db.update_review_usefulness_rate(int(r_id),int(user_id))
+        user_id = request.values['user_id']
+        db.update_review_usefulness_rate(int(r_id),int(user_id), request.remote_addr)
         return{"status": "success"}
     except:
         return{"status": "error"}
@@ -171,3 +174,5 @@ def add_new_user():
         
         is_user_set = db.set_user(username, password)
         return jsonify({"user_status": is_user_set})
+
+

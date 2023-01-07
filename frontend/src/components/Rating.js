@@ -1,58 +1,59 @@
 import * as React from "react";
 import {BlackStar, WhiteStar, HalfStar} from "./Stars"
-//import axios from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 const Rating = (probs) => {
     //const [time, setTime] = useState(new Date());
-    const [rating, setRating] = useState(0);
-    /*
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(new Date());
-          }, 2000);
-          
-        const fetchRatings = async () => {
-        try {
-            const request = 'http://127.0.0.1:5000/api/getStarRatingByID?' + new URLSearchParams({
-                            service_id: probs.service_id})
+    const [rating, setRating] = useState(0);    
 
-                            console.log("Api request: ", request);
-            const res = await axios.get(request,{
-                                headers: {
-                                   authorization: null , //das kann glaub ich raus
-                                   'Content-Type': 'application/json'
-                                }}) ;
-                           
-        console.log("star rating response", res)  
-        setRating(res.data.rating)                      
-                            }      
-        catch (error){
-            console.log("error fetching stars", error)
-        }
-    
-        return () => clearInterval(interval);
+    useEffect(() => {
+        //if called with loaded state
+        if (probs.hasOwnProperty('ratings')){
+                            var s = 0;
+                            try{
+                                var divisor = probs.ratings.length;
+                                if (divisor> 0){
+                                    var ratings = probs.ratings;
+                                    ratings = ratings.map((val) => val.rating )
+                                    ratings = ratings.reduce((a, b) => a + b, 0);
+                                    s = ratings / divisor;
+                                }
+                            }
+                            catch (error){
+                                
+
+                            }
+
+                            setRating(s);}
+        else{
+            const fetchRatings = async () => {
+                try {
+                    const request = 'http://127.0.0.1:5000/api/getStarRatingByID?' + new URLSearchParams({
+                                    service_id: probs.service_id})
         
-    }
-    fetchRatings();  
-}, [probs.service_id]); //time  muss rein für intervall rendering!  //[probs.service_id, reload_switch]
-    */
-    useEffect(() => {
-        var s = 0;
-        try{
-            var divisor = probs.ratings.length;
-            if (divisor> 0){
-                var ratings = probs.ratings;
-                ratings = ratings.map((val) => val.rating )
-                ratings = ratings.reduce((a, b) => a + b, 0);
-                s = ratings / divisor;
-            }
-        }
-        catch (error){
+                                    console.log("Api request: ", request);
+                    const res = await axios.get(request,{
+                                        headers: {
+                                           authorization: null , //das kann glaub ich raus
+                                           'Content-Type': 'application/json'
+                                        }}) ;
+                                   
+                console.log("star rating response", res)  
+                setRating(res.data.rating)                      
+                                    }      
+                catch (error){
+                    console.log("error fetching stars", error)
+                }
             
-        }
+                
+            }
+            fetchRatings(); 
 
-        setRating(s);
+
+        }
     }, [probs.ratings])
+    
+    
     try {
             if (rating === 0){
                 return <>no ratings given</>

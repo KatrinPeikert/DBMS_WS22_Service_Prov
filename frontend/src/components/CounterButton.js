@@ -9,9 +9,9 @@ const CounterButton = (probs) =>{
                 user_id: user_id, ////////////////
                 r_id: r_id,
               });
-              console.log(request)
-            const respone = await axios.post(request);
-            console.log(respone);
+            await axios.post(request);
+            window.location.reload();
+
             }
         catch (error){
             console.log(error);

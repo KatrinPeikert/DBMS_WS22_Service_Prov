@@ -135,20 +135,21 @@ class Database:
         return service['ratings']
         
     
-    def add_star_rating(self,  user_id: int, service_id: int, rating: int) -> bool:  
+    def add_star_rating(self,  user_id: int, service_id: int, rating: int, ip:str) -> bool:  
         """Adds a rating field if not exists with user rating
             if rating field exists, it will add or update a rating-obj for this user
         """
+        save_id = self.convert_uid(user_id, ip)
         cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
         if (len(cursor) > 0):
-            cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": user_id}}}))
-            if (len(cursor) > 0 and user_id != 4): # to allow anon multiple ratings
+            cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": save_id}}}))
+            if (len(cursor) > 0): # to allow anon multiple ratings
                 print("user in db")
-                self.db.Services.update_one({"sid": service_id, "ratings.user_id":user_id}, {"$set": {"ratings.$.rating": rating}})
+                self.db.Services.update_one({"sid": service_id, "ratings.user_id":save_id}, {"$set": {"ratings.$.rating": rating}})
             else:
-                self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": user_id, "rating": rating} } })
+                self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": save_id, "rating": rating} } })
         else:            
-            self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": user_id, "rating": rating} } })
+            self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": save_id, "rating": rating} } })
         return True
         
         
@@ -161,23 +162,31 @@ class Database:
     
     
     
-    def update_review_usefulness_rate(self, r_id: int,user_id: int) -> bool:
-        if user_id == 4:
-            self.db.Reviews.update_one({"rid": r_id}, {"$push": {"usefulness_rate": user_id}})
+    def update_review_usefulness_rate(self, r_id: int,user_id: int, ip:str) -> bool:
+        user_id = self.convert_uid(user_id, ip)
+        cursor = list(self.db.Reviews.find({"rid": r_id, "usefulness_rate":  user_id}))
+        if (len(cursor) > 0 ): 
+            self.db.Reviews.update_one({"rid": r_id},{ "$pull": { 'usefulness_rate': user_id }})
         else:
-            cursor = list(self.db.Reviews.find({"rid": r_id, "usefulness_rate":  user_id}))
-            if (len(cursor) > 0 ): 
-                self.db.Reviews.update_one({"rid": r_id},{ "$pull": { 'usefulness_rate': user_id }})
-            else:
                  self.db.Reviews.update_one({"rid": r_id}, {"$push": {"usefulness_rate": user_id}})
         return True
+    
+    
+    def convert_uid(self, id: int, ip:str):
+        print("id", id)
+        if id != 1:
+            return id
+        else:
+            return ip
+    
+    
 
             
 #passwords = username
 
 if __name__ == '__main__':
     db = Database()
-   
+    db.update_review_usefulness_rate(1,1,3)
     print('User testing:')
     user = db.get_user_data('anon', 'anon')
     print(f'User information: {user}')
