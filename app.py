@@ -45,24 +45,17 @@ def getServicesBySector():
 @cross_origin(allow_headers=['Content-Type']) 
 def get_service_by_id():    
     try:
-        response = db.get_service_prov_by_id(int(request.values['service_id']))    
+        response = db.get_service_prov_by_id(int(request.values['service_id'])) 
+        response = list(response)[0]
+        ip_hash = {"ip_hash": db.convert_uid(1, request.remote_addr)}
+        response.update(ip_hash)
         response = json_util.dumps(response)
         return response
-    except:
-        response = {"status": "error"}   
+    except Exception as e:
+        response = {"status": "error", "message": str(e)}   
+        return response
+        
  
-"""    
-@website.route("/api/getReviewsByID/", methods=['GET'])
-@cross_origin(allow_headers=['Content-Type']) 
-def get_reviews_by_id():    
-    try:
-        response = db.get_reviews(int(request.values['service_id']))    
-        response = json_util.dumps(response)
-        return response
-    except:
-        response = {"status": "error"}   
-    
- """   
 @website.route("/api/getStarRatingByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
 def get_star_rating_by_service_id():

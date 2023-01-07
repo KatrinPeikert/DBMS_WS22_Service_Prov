@@ -95,7 +95,6 @@ class Database:
             }
         ])
         
-        #return self.db.Services.find({"sid": id})
         
 
     def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> int:
