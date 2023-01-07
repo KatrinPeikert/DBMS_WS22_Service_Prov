@@ -89,6 +89,12 @@ def get_star_rating_by_user_id():
     rating = db.get_user_rating(user_id, service_id, request.remote_addr)
     return{"rating":rating}
 
+@website.route("/api/getUserName", methods=['GET'])
+@cross_origin(allow_headers=['Content-Type'])
+def get_user_name():
+    response = db.get_user_by_id(int(request.values['user_id']))
+    print(response)
+    return {"username": response['login']}
 
 
 @website.route("/api/addServices/", methods=['POST'])
