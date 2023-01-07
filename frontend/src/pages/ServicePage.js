@@ -13,8 +13,23 @@ import Rating from "../components/Rating"
 const ServicePage =  (probs) =>{
 
     const {id} = useParams(); //given params to perform query
-    const [service, setService] = useState([]); //Database response
-    const [reviews, setReviews] = useState([])
+    const [service, setService] = useState({   
+        sid: "",
+        name: "",
+        sector: "",
+        address: [
+            
+        ],
+        ratings:[
+            
+        ],
+        reviews:[
+
+        ]
+
+
+    }); //Database response
+    //const [reviews, setReviews] = useState([])
     useEffect(() => {
 
         const fetchService = async () => {
@@ -30,13 +45,14 @@ const ServicePage =  (probs) =>{
                     }}) ;
 
                 console.log("service response:", res)
-                setService(res)
+                setService(res.data[0])
             } catch (error) {
                 console.log("error", error); 
             }
 
         }
         fetchService();
+        /*
         const fetchReviews =async () =>{
             try {
                 const request = 'http://127.0.0.1:5000/api/getReviewsByID?' + new URLSearchParams({
@@ -56,24 +72,24 @@ const ServicePage =  (probs) =>{
             }
         }
         fetchReviews();
-
+        */
         }
-    ,[id] );  
+    ,[id] ); 
 
-
+    console.log("service:", service)
     try {
         return <>
-        <h2>{service.data[0].name}</h2>
-        <h2><Rating service_id={id}/></h2>
+        <h2>{service.name}</h2>
+        <h2><Rating service_id={id} ratings={service.ratings}/></h2>
         <p>
         <h3>Address:</h3>
-        {service.data[0].address[0].street} {service.data[0].address[0].number}, {service.data[0].address[0].area_code} {service.data[0].address[0].city}
+        {service.address[0].street} {service.address.number}, {service.address[0].area_code} {service.address[0].city}
         </p>
         <p>
-            <StarRatingButton serviceId={id} user_id={probs.token}/>
+        <StarRatingButton serviceId={id} user_id={probs.token}/>
         </p>
         <h3>User comments :</h3>
-        <ReviewList list ={reviews.data} token={probs.token}/>
+        <ReviewList list ={service.reviews} token={probs.token}/>
         <WriteComment service_id={id} user_id={probs.token}/>
         </>
 

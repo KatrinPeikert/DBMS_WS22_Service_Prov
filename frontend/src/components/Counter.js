@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
 
 const Counter = (probs) =>{
     const [num, setNum] = useState(0)
-    const getNum = async () =>{
+   
+    /*const getNum = async () =>{
     try {
         const request = 'http://127.0.0.1:5000/api/get_usefulness_rate/?' + new URLSearchParams({
             r_id: probs.r_id, ////////////////
@@ -20,8 +21,12 @@ const Counter = (probs) =>{
         setNum(400)
     
         }
-    }
-    getNum()
+    }*/
+    useEffect(() => {
+        setNum(probs.usefulness_rate.length)
+
+
+    },[])
     return <>{num} user found this comment usefull.</>
 
 }

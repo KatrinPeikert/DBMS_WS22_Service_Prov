@@ -9,7 +9,7 @@ import useToken from '../App/useToken.js';
 import AdduserPage from "./adduser"
 
 
-export default function Login_index() {
+export default function LoginIndex() {
 
     const { token, setToken } = useToken();
     return (

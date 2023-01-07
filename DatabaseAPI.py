@@ -84,7 +84,18 @@ class Database:
         """Checks if there exists a service provider with the given id. 
             Returns its data when it does, else returns None
         """   
-        return self.db.Services.find({"sid": id})
+        return self.db.Services.aggregate([{"$match": {"sid": id}},
+                                           {
+            "$lookup": {
+                "from": "Reviews",
+                "localField": "sid",
+                "foreignField": "id_service",
+                "as": "reviews"
+                }
+            }
+        ])
+        
+        #return self.db.Services.find({"sid": id})
         
 
     def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> bool:

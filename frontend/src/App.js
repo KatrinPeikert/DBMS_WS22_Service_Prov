@@ -5,7 +5,7 @@ import { Routes, Route, useParams } from "react-router-dom"
 import FrontPage from "./pages/frontpage"
 //import LoginPage from "./pages/login"
 import SearchPage from "./pages/search"
-import AddService from "./pages/addservice"
+import AddService from "./pages/AddService"
 import PageNotFound from "./pages/PageNotFound"
 import GetServices from "./pages/queryResultList"
 import ServicePage from "./pages/ServicePage"
@@ -14,12 +14,12 @@ import Layout from './components/Layout';
 
 import useToken from './components/App/useToken.js';
 //import Login from './components/Login/Login';
-import Login_index from "./components/Login/login_index"
+import LoginIndex from "./components/Login/login_index"
 
 function App() {
   const { token, setToken } = useToken();
   if ((!token) || (token === "invalid_user")) {
-    return <Login_index />
+    return <LoginIndex />
   }
 
   return (

@@ -1,15 +1,16 @@
 import * as React from "react";
 import {BlackStar, WhiteStar, HalfStar} from "./Stars"
-import axios from "axios";
+//import axios from "axios";
 import { useEffect, useState } from "react";
 const Rating = (probs) => {
-    const [time, setTime] = useState(new Date());
+    //const [time, setTime] = useState(new Date());
     const [rating, setRating] = useState(0);
+    /*
     useEffect(() => {
         const interval = setInterval(() => {
             setTime(new Date());
           }, 2000);
-
+          
         const fetchRatings = async () => {
         try {
             const request = 'http://127.0.0.1:5000/api/getStarRatingByID?' + new URLSearchParams({
@@ -30,36 +31,58 @@ const Rating = (probs) => {
         }
     
         return () => clearInterval(interval);
+        
     }
     fetchRatings();  
 }, [probs.service_id]); //time  muss rein für intervall rendering!  //[probs.service_id, reload_switch]
-    
-    if (rating === 0){
-        return <>no ratings given</>
-    }
-    const stars = parseInt(rating / 1); //number of full stars
+    */
+    useEffect(() => {
+        var s = 0;
+        try{
+            var divisor = probs.ratings.length;
+            if (divisor> 0){
+                var ratings = probs.ratings;
+                ratings = ratings.map((val) => val.rating )
+                ratings = ratings.reduce((a, b) => a + b, 0);
+                s = ratings / divisor;
+            }
+        }
+        catch (error){
+            
+        }
+
+        setRating(s);
+    }, [probs.ratings])
+    try {
+            if (rating === 0){
+                return <>no ratings given</>
+            }
+            const stars = parseInt(rating / 1); //number of full stars
 
 
-    //var result = String.fromCodePoint(9733).repeat(stars)//"\u2605".repeat(stars);
-    var wStars = 5 -stars;
-    var halfStar = 0;
-    if (rating - stars >= 0.5){
-        halfStar = 1; // 	"\u2BE8" //String.fromCodePoint(11243);
-        wStars =wStars -1;
-    }
-    const BStarMap = Array(stars).fill(0); 
-    const HStarMap = Array(halfStar).fill(0); 
-    const WStarMap = Array(wStars).fill(0);     
+            //var result = String.fromCodePoint(9733).repeat(stars)//"\u2605".repeat(stars);
+            var wStars = 5 -stars;
+            var halfStar = 0;
+            if (rating - stars >= 0.5){
+                halfStar = 1; // 	"\u2BE8" //String.fromCodePoint(11243);
+                wStars =wStars -1;
+            }
+            const BStarMap = Array(stars).fill(0); 
+            const HStarMap = Array(halfStar).fill(0); 
+            const WStarMap = Array(wStars).fill(0);     
 
-    //result = result + "\u2606".repeat(wStars);
-    return <>
-     {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
-     {HStarMap.map((item,index)=>{return <span key={index}><HalfStar /></span>})}
-     {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})}
-    
-    
-    
-    </>
+            //result = result + "\u2606".repeat(wStars);
+            return <>
+            {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
+            {HStarMap.map((item,index)=>{return <span key={index}><HalfStar /></span>})}
+            {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})}
+            
+            
+            
+            </>
 
-}
+        }
+    catch (error){
+        return <>No ratings</>
+    }}
 export default Rating
