@@ -27,7 +27,8 @@ const ServicePage =  (probs) =>{
         ],
         reviews:[
 
-        ]
+        ],
+        ip_hash:""
 
 
     }); //Database response
@@ -46,7 +47,7 @@ const ServicePage =  (probs) =>{
                        'Content-Type': 'application/json'
                     }}) ;
 
-                setService(res.data[0])
+                setService(res.data)
             } catch (error) {
                 console.log("error", error); 
                 navigate("/error")
@@ -74,7 +75,7 @@ const ServicePage =  (probs) =>{
         <StarRatingButton serviceId={id} user_id={probs.token}  ratings={service.ratings}/>
         </div>
         <h3>User comments :</h3>
-        <ReviewList list ={service.reviews} token={probs.token}/>
+        <ReviewList list ={service.reviews} token={probs.token} ipHash = {service.ip_hash}/>
         <WriteComment service_id={id} user_id={probs.token}/>
         </>
 
