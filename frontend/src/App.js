@@ -5,7 +5,7 @@ import { Routes, Route, useParams } from "react-router-dom"
 import FrontPage from "./pages/frontpage"
 //import LoginPage from "./pages/login"
 import SearchPage from "./pages/search"
-import AddService from "./pages/AddService"
+import AddService from "./pages/addservice"
 import PageNotFound from "./pages/PageNotFound"
 import GetServices from "./pages/queryResultList"
 import ServicePage from "./pages/ServicePage"
@@ -26,11 +26,11 @@ function App() {
 
     <Layout>
       <Routes>
-        <Route path="/" element={<FrontPage token={token}/>}></Route>
+        <Route path="/" element={<FrontPage token={token} />}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/query/:type/:keyword/" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>
-        <Route path="/service/:id" element={<ServicePage token={token}/>}></Route>
+        <Route path="/service/:id" element={<ServicePage token={token} />}></Route>
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
     </Layout>

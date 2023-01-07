@@ -170,4 +170,8 @@ def add_new_user():
         password = str(request.json["passw"])
         
         is_user_set = db.set_user(username, password)
-        return jsonify({"user_status": is_user_set})
+        if is_user_set:
+            
+            return jsonify({"user_status": "success"})
+        else:
+            return jsonify({"user_status": "name_error"})
