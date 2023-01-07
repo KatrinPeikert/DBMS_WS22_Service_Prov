@@ -112,10 +112,12 @@ def add_review():
 @cross_origin(allow_headers=['Content-Type']) 
 def add_star_rating_to_service():
     try:
-        user_id = request.values['user_id']
-        service_id = request.values['service_id']
-        rating = request.values['rating']
-        db.add_star_rating(int(user_id), int(service_id), int(rating), request.remote_add)
+        user_id = int(request.values['user_id'])
+        service_id = int(request.values['service_id'])
+        rating = int(request.values['rating'])
+        print(user_id, service_id, rating)
+        db.add_star_rating(user_id, service_id, rating, request.remote_addr)
+        print("done")
         return {
             "status": "OK",            
         }
@@ -134,7 +136,7 @@ def get_review_usefulness_rate():
 """
 @website.route("/api/addUsefullness/", methods=['POST'])  
 @cross_origin(allow_headers=['Content-Type']) 
-def update__usefulness_rate():
+def update_usefulness_rate():
     try:
         r_id = request.values['r_id']     
         user_id = request.values['user_id']

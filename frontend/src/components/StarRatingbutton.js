@@ -18,7 +18,8 @@ const StarRatingButton = (probs) =>{
                 service_id: serviceId,
                 rating: hover
               });
-            await axios.post(request);
+            const res = await axios.post(request);
+            console.log("rating response", res.data)
             window.location.reload();
 
             }

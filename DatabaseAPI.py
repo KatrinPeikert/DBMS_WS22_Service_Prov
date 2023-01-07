@@ -140,6 +140,7 @@ class Database:
             if rating field exists, it will add or update a rating-obj for this user
         """
         save_id = self.convert_uid(user_id, ip)
+        print(user_id, save_id)
         cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
         if (len(cursor) > 0):
             cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": save_id}}}))
@@ -148,7 +149,8 @@ class Database:
                 self.db.Services.update_one({"sid": service_id, "ratings.user_id":save_id}, {"$set": {"ratings.$.rating": rating}})
             else:
                 self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": save_id, "rating": rating} } })
-        else:            
+        else:     
+            print("push new review")       
             self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": save_id, "rating": rating} } })
         return True
         
@@ -173,11 +175,21 @@ class Database:
     
     
     def convert_uid(self, id: int, ip:str):
-        print("id", id)
+        """The anon-user has id 1. With this as input, a md5-hash of the users ip will be returned for recognizing in db
+        
+        lese: returns user id
+
+        Args:
+            id (int): user_id
+            ip (str): ip address of user
+
+        Returns:
+            _type_: _description_
+        """
         if id != 1:
             return id
         else:
-            return ip
+            return str(md5(str(ip).encode()).hexdigest())
     
     
 
@@ -186,7 +198,6 @@ class Database:
 
 if __name__ == '__main__':
     db = Database()
-    db.update_review_usefulness_rate(1,1,3)
     print('User testing:')
     user = db.get_user_data('anon', 'anon')
     print(f'User information: {user}')
