@@ -36,8 +36,8 @@ def send():
         
         username = str(request.json["user"])
         password = str(request.json["passw"])
-        is_Anon = str(request.json["isAnon"])
-        if is_Anon:
+        is_Anon = bool(request.json["isAnon"])
+        if is_Anon == True:
             username= "anon"
             password="anon"
             

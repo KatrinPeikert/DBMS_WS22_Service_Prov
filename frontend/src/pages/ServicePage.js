@@ -11,7 +11,7 @@ import Rating from "../components/Rating"
 
 
 const ServicePage =  (probs) =>{
-
+    const [state, setState] = useState(1)
     const {id} = useParams(); //given params to perform query
     const [service, setService] = useState({   
         sid: "",
@@ -44,7 +44,6 @@ const ServicePage =  (probs) =>{
                        'Content-Type': 'application/json'
                     }}) ;
 
-                console.log("service response:", res)
                 setService(res.data[0])
             } catch (error) {
                 console.log("error", error); 
@@ -74,20 +73,22 @@ const ServicePage =  (probs) =>{
         fetchReviews();
         */
         }
-    ,[id] ); 
+    ,[id, state] ); 
 
     console.log("service:", service)
     try {
         return <>
+        you are logged in as user with id {probs.token}
         <h2>{service.name}</h2>
         <h2><Rating service_id={id} ratings={service.ratings}/></h2>
-        <p>
+        
         <h3>Address:</h3>
+        <div>
         {service.address[0].street} {service.address.number}, {service.address[0].area_code} {service.address[0].city}
-        </p>
-        <p>
-        <StarRatingButton serviceId={id} user_id={probs.token}/>
-        </p>
+        </div>
+        <div>
+        <StarRatingButton serviceId={id} user_id={probs.token} state={state}/>
+        </div>
         <h3>User comments :</h3>
         <ReviewList list ={service.reviews} token={probs.token}/>
         <WriteComment service_id={id} user_id={probs.token}/>

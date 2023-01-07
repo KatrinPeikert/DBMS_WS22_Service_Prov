@@ -8,13 +8,13 @@ import CounterButton from "../components/CounterButton"
 const ReviewList =  (probs) =>{
 
     try {
-        return <p>{probs.list.map( (r) => <p>"{r.text}", by {r.login_user} (with user_id: {r.user_id})<br />
+        return <div>{probs.list.map( (r, key) => <p key={key}>"{r.text}", by {r.login_user} (with user_id: {r.user_id})<br />
         <Counter r_id={r.rid} usefulness_rate={r.usefulness_rate}/> <CounterButton r_id={r.rid} user_id={probs.token}/><br /> </p>
         )}
-        </p>
+        </div>
     } 
     catch (error) {
-        return <p>No reviwes given.</p>
+        return <div>No reviwes given.</div>
     }
        
     

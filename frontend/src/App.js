@@ -26,7 +26,7 @@ function App() {
 
     <Layout>
       <Routes>
-        <Route path="/" element={<FrontPage />}></Route>
+        <Route path="/" element={<FrontPage token={token}/>}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/query/:type/:keyword/" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>

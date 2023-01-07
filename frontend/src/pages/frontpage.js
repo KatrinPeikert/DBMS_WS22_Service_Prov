@@ -1,9 +1,9 @@
 import React from "react";
-export default function FrontPage() {
+export default function FrontPage(probs) {
 return (
   <>
   <h2>Frontpage</h2>
-  <p>Welcome to our page.</p>
+  <p>Welcome user {probs.token} our page.</p>
   </>
 );
 }
