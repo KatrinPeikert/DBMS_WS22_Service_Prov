@@ -1,9 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import Navigation from './Sidebar';
+import Navigation from './Navigation';
 import styled from 'styled-components';
 // component styles
+/*
 const Wrapper = styled.div`
+    width: 80%;
+
     @media (min-width: 700px) {
         display: flex;
         top: 130px;
@@ -26,20 +29,33 @@ const Main = styled.main`
         width: calc(100% - 220px);
     }
 `;
+*/
+const Main = styled.main``
+const Wrapper = styled.div`
+background-color: #bcbebd;
 
+margin: auto;
+  width: 80%;
+  height: 800px;
+  border: 3px solid black;
+  padding: 10px;
+  margin-top: 50px;`
 
 const Layout = ({ children }) => {
 
 
     return (
         <React.Fragment>
-            <Header />
+           
             <Wrapper>
-                <Navigation />
+            <Header />
 
-                <Main>{children}</Main>
+            <Main>{children}</Main>  
+                
             </Wrapper>
         </React.Fragment>
     );
 };
 export default Layout;
+
+//    
