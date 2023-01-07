@@ -162,3 +162,12 @@ def after_request(response):
                     if origin.find(request.headers["Host"]) != -1:
                         response.headers["Access-Control-Allow-Origin"] = origin
     return response
+
+@website.route("/add_new_user", methods=['POST'])
+def add_new_user():
+    if request.method == 'POST':
+        username = str(request.json["user"])
+        password = str(request.json["passw"])
+        
+        is_user_set = db.set_user(username, password)
+        return jsonify({"user_status": is_user_set})

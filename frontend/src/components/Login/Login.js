@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Login.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 async function loginUser(credentials) {
     return fetch('/auth/send', {
@@ -13,11 +15,10 @@ async function loginUser(credentials) {
         .then(data => data.json())
 }
 
-
 export default function LoginPage({ setToken }) {
     const [user, setUser] = useState("");
     const [passw, setPassw] = useState("");
-    const [isAnon, setIsAnon] = useState(false)
+    const [isAnon, setIsAnon] = useState(false);
     const submitThis = async e => {
         e.preventDefault();
         const token = await loginUser({
@@ -26,24 +27,35 @@ export default function LoginPage({ setToken }) {
             isAnon
         });
         setToken(token);
+        window.location.reload(false);
     }
     return (
-        <div><h2 >Login Page</h2>
-            <div className="login-wrapper">
-                <form onSubmit={submitThis}>
-                    <div>
-                        <label htmlFor="user">Username</label>
-                        <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="passw">Password</label>
-                        <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
-                    </div>
-                    <h2 >OR</h2>
-                    <input type="checkbox" id="anon" checked={isAnon} onChange={(e) => setIsAnon(!isAnon)} />
-                    <span>Log In Anonymous</span>
-                    <button type="submit" >Login</button>
-                </form>
+
+        <div class="bg-image background ">
+            <div class="row">
+                <h2 class="header-login">Welcome!</h2> <hr></hr>
+            </div>
+            <div class="row">
+                <div className='new-user-box '> <Link class="btn new-user-box-link" to="/new_user"> Create a new User Account </Link> </div>
+
+                <div className="login-wrapper">
+                    <form onSubmit={submitThis}>
+                        <div>
+                            <label htmlFor="user">Username</label>
+                            <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                        </div>
+                        <div>
+                            <label htmlFor="passw">Password</label>
+                            <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                        </div>
+
+
+                        <hr></hr>
+                        <input type="checkbox" id="anon" checked={isAnon} onChange={(e) => setIsAnon(!isAnon)} />
+                        <span>Log In Anonymous</span>
+                        <button class="button-login" type="submit" >Login</button>
+                    </form>
+                </div>
             </div>
         </div>
     )
@@ -52,3 +64,4 @@ export default function LoginPage({ setToken }) {
 LoginPage.propTypes = {
     setToken: PropTypes.func.isRequired
 }
+
