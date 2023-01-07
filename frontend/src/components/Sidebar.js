@@ -41,21 +41,18 @@ const NavListStyle = styled.ul`
 const Sidebar = () => {
     return (
         <Nav>
-            <NavListStyle> 
+            <NavListStyle>
                 <li>
-                <Link to="/">Home</Link>
+                    <Link to="/">Home</Link>
                 </li>
                 <li>
-                <Link to="/search">Search</Link>
+                    <Link to="/search">Search</Link>
                 </li>
                 <li>
-                <Link to="/addService">Add a new Service</Link>
+                    <Link to="/addService">Add a new Service</Link>
                 </li>
                 <li>
-                <Link to="/login">Login</Link>
-                </li>
-                <li>
-                <Link to="/register">Register</Link>  
+                    <Link to="/register">Register</Link>
                 </li>
             </NavListStyle>
         </Nav>

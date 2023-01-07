@@ -9,13 +9,28 @@
 
 }
 
-h2 {
+.new-user-box {
+    width: 382px;
+    overflow: hidden;
+    margin: auto;
+    margin: 20 0 0 450px;
+    padding: 80px;
+    background: #bcbebd;
+    border-radius: 15px;
+}
+
+.new-user-box-link {
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
+
+.header-login {
     text-align: center;
     color: #000000;
     padding: 20px;
 }
 
-button {
+.button-login {
 
     width: 200px;
     height: 30px;
@@ -33,4 +48,13 @@ text {
     border: none;
     border-radius: 3px;
     padding-left: 8px;
+}
+
+
+
+
+
+.background {
+    background: #e2e2e2 url("./images/bg-image.webp");
+    height: 100vh
 }
