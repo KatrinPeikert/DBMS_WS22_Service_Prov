@@ -2,9 +2,12 @@ import * as React from "react";
 import {BlackStar, WhiteStar, HalfStar} from "./Stars"
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Rating = (probs) => {
     //const [time, setTime] = useState(new Date());
     const [rating, setRating] = useState(0);    
+    const navigate = useNavigate();
 
     useEffect(() => {
         //if called with loaded state
@@ -20,7 +23,7 @@ const Rating = (probs) => {
                                 }
                             }
                             catch (error){
-                                
+                                navigate("/error")
 
                             }
 
@@ -43,6 +46,7 @@ const Rating = (probs) => {
                                     }      
                 catch (error){
                     console.log("error fetching stars", error)
+                    navigate("/error")
                 }
             
                 

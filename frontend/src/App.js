@@ -9,7 +9,7 @@ import AddService from "./pages/AddService"
 import PageNotFound from "./pages/PageNotFound"
 import GetServices from "./pages/queryResultList"
 import ServicePage from "./pages/ServicePage"
-
+import ApiError from "./pages/ApiError"
 import Layout from './components/Layout';
 
 import useToken from './components/App/useToken.js';
@@ -31,6 +31,8 @@ function App() {
         <Route path="/query/:type/:keyword/" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>
         <Route path="/service/:id" element={<ServicePage token={token} />}></Route>
+        <Route path="/error" element={<ApiError />}></Route>
+
         <Route path="/*" element={<PageNotFound />}></Route>
       </Routes>
     </Layout>

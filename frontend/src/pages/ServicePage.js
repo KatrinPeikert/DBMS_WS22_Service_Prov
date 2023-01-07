@@ -11,7 +11,9 @@ import Rating from "../components/Rating"
 
 
 const ServicePage =  (probs) =>{
-    const [state, setState] = useState(1)
+    const navigate =useNavigate()
+
+    //const [state, setState] = useState(1)
     const {id} = useParams(); //given params to perform query
     const [service, setService] = useState({   
         sid: "",
@@ -47,33 +49,15 @@ const ServicePage =  (probs) =>{
                 setService(res.data[0])
             } catch (error) {
                 console.log("error", error); 
+                navigate("/error")
+
             }
 
         }
         fetchService();
-        /*
-        const fetchReviews =async () =>{
-            try {
-                const request = 'http://127.0.0.1:5000/api/getReviewsByID?' + new URLSearchParams({
-                    service_id: id,
-                    });
-                    console.log("Api request: ", request);
-                    const res = await axios.get(request,{
-                        headers: {
-                           authorization: null , //das kann glaub ich raus
-                           'Content-Type': 'application/json'
-                        }}) ;
-                    console.log("review response:", res)
-
-                    setReviews(res);
-            } catch (error) {
-                console.log(error);
-            }
+        
         }
-        fetchReviews();
-        */
-        }
-    ,[id, state] ); 
+    ,[id] ); //state
 
     console.log("service:", service)
     try {
@@ -87,7 +71,7 @@ const ServicePage =  (probs) =>{
         {service.address[0].street} {service.address.number}, {service.address[0].area_code} {service.address[0].city}
         </div>
         <div>
-        <StarRatingButton serviceId={id} user_id={probs.token} state={state}/>
+        <StarRatingButton serviceId={id} user_id={probs.token}  ratings={service.ratings}/>
         </div>
         <h3>User comments :</h3>
         <ReviewList list ={service.reviews} token={probs.token}/>

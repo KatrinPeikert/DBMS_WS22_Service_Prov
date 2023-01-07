@@ -65,7 +65,7 @@ def get_reviews_by_id():
  """   
 @website.route("/api/getStarRatingByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
-def getStarRatingByID():
+def get_star_rating_by_service_id():
         service_id = int(request.values['service_id'])
         ratings  = db.get_star_ratings(service_id)
         ratings_sum = 0
@@ -81,6 +81,16 @@ def getStarRatingByID():
             return {"message": "error"}
 
 
+@website.route("/api/getUserRating/", methods=['GET'])
+@cross_origin(allow_headers=['Content-Type'])
+def get_star_rating_by_user_id():
+    service_id = int(request.values['s_id'])
+    user_id =  int(request.values['user_id'])
+    rating = db.get_user_rating(user_id, service_id, request.remote_addr)
+    return{"rating":rating}
+
+
+
 @website.route("/api/addServices/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
 def addServices():
@@ -91,7 +101,9 @@ def addServices():
     
     try:
         result = db.set_service_prov(request.values['name'], {"street":request.values['street'],"number": request.values['no'], "area_code":request.values['zip'],"city":request.values['city'] },request.values['sector'] )
-        return {"status": "sucess"}
+        if result is None:
+            return {"status": "Service allready exists"}
+        return {"status": "OK", "service_id": result}
     except:
         return {"status": "unable to write to db." }  
     

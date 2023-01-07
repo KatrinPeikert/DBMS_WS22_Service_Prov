@@ -51,9 +51,7 @@ const Sidebar = () => {
                 <li>
                     <Link to="/addService">Add a new Service</Link>
                 </li>
-                <li>
-                    <Link to="/register">Register</Link>
-                </li>
+              
             </NavListStyle>
         </Nav>
     );

@@ -98,7 +98,7 @@ class Database:
         #return self.db.Services.find({"sid": id})
         
 
-    def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> bool:
+    def set_service_prov(self, name: str, address: dict, sector: str, additional_info:dict = dict()) -> int:
         """Creates a new Service Provider with given data
         """
         service_id = self.db.Services.find().sort('sid', -1).limit(1)[0]['sid'] + 1
@@ -106,8 +106,12 @@ class Database:
         for key in additional_info.keys():
             if not(key in data.keys()):
                 data[key] = additional_info[key]
-        self.db.Services.insert_one(data)
-        return True
+        if len(list(self.db.Services.find({"name": name, "address":[address], "sector":sector}))) > 0:
+            return None
+        else:       
+            self.db.Services.insert_one(data)
+            return service_id
+        
     
     def get_reviews(self, service_id: int) -> list:
         """Finds all existing reviews for a Service Provider identified by their ID
@@ -131,8 +135,8 @@ class Database:
         return True
     
     def get_star_ratings(self, service_id: int) -> list:
-        service = list(self.db.Services.find({"sid": service_id}))[0]
-        return service['ratings']
+        service = list(self.db.Services.find({"sid": service_id}))[0]['ratings']
+        return service
         
     
     def add_star_rating(self,  user_id: int, service_id: int, rating: int, ip:str) -> bool:  
@@ -173,6 +177,18 @@ class Database:
                  self.db.Reviews.update_one({"rid": r_id}, {"$push": {"usefulness_rate": user_id}})
         return True
     
+    def get_user_rating(self, u_id: int, s_id: int, ip:str) -> int:
+        u_id = self.convert_uid(u_id, ip)
+        result = list(self.db.Services.find({"sid":s_id, "ratings.user_id":u_id } ))
+        if len(result) ==0:
+            return 0
+        else:
+            result = result[0]['ratings']
+            for r in result:
+                if r['user_id'] == u_id:
+                    return r['rating'] 
+            return None
+    
     
     def convert_uid(self, id: int, ip:str):
         """The anon-user has id 1. With this as input, a md5-hash of the users ip will be returned for recognizing in db
@@ -198,6 +214,7 @@ class Database:
 
 if __name__ == '__main__':
     db = Database()
+    print(db.get_user_rating(5, 1, "bla"))
     print('User testing:')
     user = db.get_user_data('anon', 'anon')
     print(f'User information: {user}')

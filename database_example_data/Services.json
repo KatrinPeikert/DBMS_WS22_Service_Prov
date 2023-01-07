@@ -5,9 +5,9 @@
         "sector": "Technology",
         "address": [
             {
-                "street": "Hauptstraße",
-                "number": 1,
-                "area_code": 123456,
+                "street": "Hauptstrasse",
+                "number": "1",
+                "area_code": "123456",
                 "city": "Neustadt"
             }
         ],
@@ -22,9 +22,9 @@
         "sector": "Food",
         "address": [
             {
-                "street": "Frankfurter Straße",
-                "number": 49,
-                "area_code": 654321,
+                "street": "Frankfurter Strasse",
+                "number": "49",
+                "area_code": "654321",
                 "city": "Berlin"
             }
         ],

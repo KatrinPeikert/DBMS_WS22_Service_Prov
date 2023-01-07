@@ -4,11 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 
 const AddService = () => {
-  //const navigate =useNavigate()
+  const navigate =useNavigate()
 
   const [Service, setService] = useState({
     name:"", sector:"", street:"", no:"", city:"", zip:"",  
   });
+  const [exists, setExists] =useState(false)
   const changeHandler = (e) =>{
     setService(prev=>({...prev, [e.target.name]: e.target.value }))
   };
@@ -25,10 +26,25 @@ const AddService = () => {
         zip: Service.zip
         });
         console.log(request)
-      const respone = await axios.post(request);
-      console.log(respone);
+      const response = await axios.post(request);
+      console.log(response.data);
+      if (response.data.status=== "Service allready exists"){
+        setExists(true);
+      }
+      else{
+        setExists(false);
+        if (response.data.status=== "OK")
+        try{
+          const link = "/service/" + response.data.service_id
+          navigate(link);
+        }
+        catch (error){
+
+        }
+      }
     } catch (error) {
       console.log(error);
+      navigate("/error")
       
     }
 
@@ -48,6 +64,7 @@ const AddService = () => {
 
     <button type="submit" onClick={clickHander}>Add to Database</button>
     </form>
+    {exists && <b>This Service allready exists.</b>}
     </div>
 
 

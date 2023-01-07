@@ -4,7 +4,8 @@ import axios from "axios";
 import cors from "cors";
 import { 
     Link,
-    useParams
+    useParams,
+    useNavigate
   } from "react-router-dom";
 
 import Rating from "../components/Rating"  
@@ -12,7 +13,8 @@ import DetailsButton from "../components/DetailsButton"
 import FuzzyWordsList from "../components/FuzzyWordList"
 
 const GetServices = () =>{
-    cors()
+    //cors()
+    const navigate =useNavigate()
 
     const {type, keyword} = useParams(); //given params to perform query
     const [services, setServices] = useState([]); //Database response
@@ -47,6 +49,8 @@ const GetServices = () =>{
                      
                  catch (error) {
                     console.log("error", error); 
+                    navigate("/error")
+
                 }
 
             }

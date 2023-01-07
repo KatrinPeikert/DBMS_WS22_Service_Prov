@@ -3,8 +3,7 @@ import * as React from "react";
 
 import styled from 'styled-components';
 import ReactLogo from './../logo.svg';
-
-const HeaderStyle = styled.header`
+import { useNavigate } from "react-router-dom";const HeaderStyle = styled.header`
     color: #880D1E;
     width: 100%;
     padding: 0.5em 1em;
@@ -18,6 +17,7 @@ const HeaderStyle = styled.header`
 `;
 
 async function logoutUser() {
+
     sessionStorage.removeItem("token");
     return fetch('/auth/logout', {
         method: 'POST',
@@ -27,13 +27,21 @@ async function logoutUser() {
         body: JSON.stringify()
     })
         .then(data => data.json())
+        .catch(error => {
+            const navigate = useNavigate();
+            navigate("/error")
+        })
 }
 
 export default function Header() {
+    const navigate = useNavigate();
     const LogOut = async e => {
         e.preventDefault();
         await logoutUser();
+        navigate("/")
         window.location.reload(false);
+
+
     }
     return (<header>
         <HeaderStyle>

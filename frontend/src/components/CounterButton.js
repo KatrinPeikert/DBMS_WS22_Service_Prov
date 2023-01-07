@@ -1,8 +1,11 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CounterButton = (probs) =>{
+    const navigate =useNavigate()
+
     const sendVoting = async (r_id, user_id ) =>{
         try {
             const request = 'http://127.0.0.1:5000/api/addUsefullness/?' + new URLSearchParams({
@@ -15,6 +18,8 @@ const CounterButton = (probs) =>{
             }
         catch (error){
             console.log(error);
+            navigate("/error")
+
 
     }}
 

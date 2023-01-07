@@ -19,19 +19,7 @@ const SearchPage = () => {
     //build api request from form
     event.preventDefault();
     navigate("/query/name/" +query.name )
-    /*
-    const request = 'http://127.0.0.1:5000/api/getServices?' + new URLSearchParams({
-    name: query.name,
-    sector: query.sector,
-    });
-    console.log(request);
-    try {
-      await axios.get(request)
-    } catch (error) {
-      console.log("error: ", error);
-      
-    }
-    */
+  
 
   }
   const handleSubmitSector=  (event) => {

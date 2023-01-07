@@ -6,6 +6,8 @@ import axios from "axios";
 
 
 const WriteComment =(probs) =>{
+    const navigate =useNavigate()
+
     const [comment, setComment] = useState({
         commentText:""
       });
@@ -30,6 +32,7 @@ const WriteComment =(probs) =>{
         }
         catch (error) {
             console.log(error);
+            navigate("/error")
         }
     }
     return    <>      
