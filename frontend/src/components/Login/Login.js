@@ -47,18 +47,18 @@ export default function LoginPage({ setToken }) {
                 <div className="login-wrapper">
                     <form onSubmit={submitThis}>
                         <div>
-                            <label htmlFor="user">Username</label>
+                            <label htmlFor="user">Username</label> <br />
                             <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
                         </div>
                         <div>
-                            <label htmlFor="passw">Password</label>
+                            <label htmlFor="passw">Password</label><br />
                             <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
                         </div>
 
 
                         <hr></hr>
                         <input type="checkbox" id="anon" checked={isAnon} onChange={(e) => setIsAnon(!isAnon)} />
-                        <span>Log In Anonymous</span>
+                        <span>Log In Anonymous</span><br />
                         <button class="button-login" type="submit" >Login</button>
                     </form>
                 </div>
