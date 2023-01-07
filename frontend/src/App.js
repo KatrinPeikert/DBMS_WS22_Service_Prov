@@ -20,17 +20,16 @@ function App() {
   if ((!token) || (token === "invalid_user")) {
     return <Login setToken={setToken} />
   }
-  return (
-   
+  console.log(token )
+  return (   
     <Layout>
       <Routes>
         <Route path="/" element={<FrontPage />}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/query/:type/:keyword/" element={<GetServices />}></Route>
         <Route path="/addService" element={<AddService />}></Route>
-        <Route path="/service/:id" element={<ServicePage />}></Route>
+        <Route path="/service/:id" element={<ServicePage token={token}/>}></Route>
         <Route path="/*" element={<PageNotFound />}></Route>
-
       </Routes>
     </Layout>
 

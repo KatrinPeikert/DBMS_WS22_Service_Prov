@@ -5,7 +5,7 @@
         "login_user": "user1",
         "text": "Their products are really great",
         "id_service": 1,
-        "usefulness_rate": 5
+        "usefulness_rate": []
     },
     {
         "rid": 2,
@@ -13,6 +13,6 @@
         "login_user": "user1",
         "text": "delivery took too long",
         "id_service": 2,
-        "usefulness_rate": 2
+        "usefulness_rate": []
     }
 ]

@@ -11,6 +11,9 @@
                 "city": "Neustadt"
             }
         ],
+        "ratings":[
+            
+        ],
         "store_manager": "Max Miller"
     },
     {
@@ -24,6 +27,9 @@
                 "area_code": 654321,
                 "city": "Berlin"
             }
+        ],
+        "ratings":[
+
         ]
     }
 ]

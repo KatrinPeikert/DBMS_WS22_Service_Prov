@@ -61,8 +61,22 @@ def get_reviews_by_id():
     except:
         response = {"status": "error"}   
     
-    
-
+@website.route("/api/getStarRatingByID/", methods=['GET'])
+@cross_origin(allow_headers=['Content-Type'])
+def getStarRatingByID():
+        service_id = int(request.values['service_id'])
+        ratings  = db.get_star_ratings(service_id)
+        ratings_sum = 0
+        for i in ratings:
+            ratings_sum += i['rating']
+        try: 
+            rating = ratings_sum/len(ratings)
+            return {"rating": rating, "num_ratings": len(ratings)}
+        except ZeroDivisionError:
+            print(ZeroDivisionError)
+            return {"rating": 0, "num_ratings": 0}
+        except:
+            return {"message": "error"}
 
 @website.route("/api/addServices/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
@@ -93,21 +107,39 @@ def add_review():
     
 @website.route("/api/addStarRating/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
-def add_star_rating():
+def add_star_rating_to_service():
     try:
         user_id = request.values['user_id']
-        user_name = request.values['user_name']
         service_id = request.values['service_id']
-        rating = int(request.values['rating'])
-        db.add_star_rating(user_id, service_id, rating)
+        rating = request.values['rating']
+        db.add_star_rating(int(user_id), int(service_id), int(rating))
         return {
-            "status": "OK"
+            "status": "OK",            
         }
+    except Exception as err:
+        return {
+            "status": "error",
+            "message": str(err)
+        }
+        
+@website.route("/api/get_usefulness_rate/", methods=['GET'])  
+@cross_origin(allow_headers=['Content-Type']) 
+def get_review_usefulness_rate():
+    r_id = request.values['r_id']     
+    num = db.get_usefulness_rate(r_id)
+    return num
 
+@website.route("/api/addUsefullness/", methods=['POST'])  
+@cross_origin(allow_headers=['Content-Type']) 
+def update__usefulness_rate():
+    try:
+        r_id = request.values['r_id']     
+        user_id = request.values['r_id']    
+        db.update_review_usefulness_rate(int(r_id),int(user_id))
+        return{"status": "success"}
     except:
-        return {
-            "status": "error"
-        }
+        return{"status": "error"}
+
 
 @website.after_request
 def after_request(response):

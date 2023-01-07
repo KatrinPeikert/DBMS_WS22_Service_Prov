@@ -73,7 +73,7 @@ const GetServices = () =>{
                         </tr>
                 </thead>
                 <tbody>
-                {services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td><td><Rating /></td><td><DetailsButton id={s.sid}/></td></tr>  )}
+                {services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td><td><Rating service_id={s.sid}/></td><td><DetailsButton id={s.sid}/></td></tr>  )}
                 </tbody>
                 </table>
                 </div> 

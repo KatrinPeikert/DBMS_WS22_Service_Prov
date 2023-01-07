@@ -7,12 +7,16 @@ import axios from "axios";
 import ReviewList from "../components/ReviewList"
 import WriteComment from "../components/WriteComment"
 import StarRatingButton from "../components/StarRatingbutton"
+import Rating from "../components/Rating"  
 
-const ServicePage =  () =>{
+
+const ServicePage =  (probs) =>{
+
     const {id} = useParams(); //given params to perform query
     const [service, setService] = useState([]); //Database response
     const [reviews, setReviews] = useState([])
     useEffect(() => {
+
         const fetchService = async () => {
             try {
                 const request = 'http://127.0.0.1:5000/api/getServiceById?' + new URLSearchParams({
@@ -60,16 +64,17 @@ const ServicePage =  () =>{
     try {
         return <>
         <h2>{service.data[0].name}</h2>
+        <h2><Rating service_id={id}/></h2>
         <p>
         <h3>Address:</h3>
         {service.data[0].address[0].street} {service.data[0].address[0].number}, {service.data[0].address[0].area_code} {service.data[0].address[0].city}
         </p>
         <p>
-            <StarRatingButton serviceId={id} />
+            <StarRatingButton serviceId={id} user_id={probs.token}/>
         </p>
-        <h3>User comments:</h3>
-        <ReviewList list ={reviews.data} />
-        <WriteComment service_id={id} user="dummy_user" user_id="1"/>
+        <h3>User comments :</h3>
+        <ReviewList list ={reviews.data} token={probs.token}/>
+        <WriteComment service_id={id} user_id={probs.token}/>
         </>
 
 

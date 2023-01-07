@@ -91,7 +91,7 @@ class Database:
         """Creates a new Service Provider with given data
         """
         service_id = self.db.Services.find().sort('sid', -1).limit(1)[0]['sid'] + 1
-        data = {"sid": service_id, "name": name, "address":[address], "sector":sector}
+        data = {"sid": service_id, "name": name, "address":[address], "sector":sector, "ratings":[]}
         for key in additional_info.keys():
             if not(key in data.keys()):
                 data[key] = additional_info[key]
@@ -114,36 +114,59 @@ class Database:
         """
         review_id = self.db.Reviews.find().sort('rid', -1).limit(1)[0]['rid'] + 1
         user_name = self.db.User.find({"uid":user_id})[0]["login"]
-        data = {"rid":review_id,"user_id":user_id, "login_user": user_name, "text":text, "id_service": service_id, 'usefulness_rate':0}
+        data = {"rid":review_id,"user_id":user_id, "login_user": user_name, "text":text, "id_service": service_id, 'usefulness_rate':[]}
 
         self.db.Reviews.insert_one(data)
         return True
     
+    def get_star_ratings(self, service_id: int) -> list:
+        service = list(self.db.Services.find({"sid": service_id}))[0]
+        return service['ratings']
+        
     
-    
-    def add_star_rating(self, service_id: int, user_id: int, rating: int) -> bool:  
+    def add_star_rating(self,  user_id: int, service_id: int, rating: int) -> bool:  
         """Adds a rating field if not exists with user rating
             if rating field exists, it will add or update a rating-obj for this user
-        """     
+        """
         cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
         if (len(cursor) > 0):
             cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": user_id}}}))
-            print(cursor)
-            if (len(cursor) > 0):
+            if (len(cursor) > 0 and user_id != 4): # to allow anon multiple ratings
                 print("user in db")
                 self.db.Services.update_one({"sid": service_id, "ratings.user_id":user_id}, {"$set": {"ratings.$.rating": rating}})
             else:
                 self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": user_id, "rating": rating} } })
-                print(list(self.db.Services.find({ "sid": service_id})))
         else:            
-            cursor = list(self.db.Services.find( {"sid": service_id})) 
-            self.db.Services.update_one({ "sid": service_id},  {"$set": { "ratings":[{"user_id": user_id, "rating": rating}] } })
+            self.db.Services.update_one({ "sid": service_id},  {"$push": { "ratings":{"user_id": user_id, "rating": rating} } })
+        return True
+        
+        
+    def get_usefulness_rate(self, review_id:int) -> int:
+        """ Get number of users who found this review userfull
+        """
+        review = list(self.db.Reviews.find({"rid": int(review_id)}))[0]
+        usefulness_rate = len(review['usefulness_rate'])        
+        return {"rate": usefulness_rate}
+    
+    
+    
+    def update_review_usefulness_rate(self, r_id: int,user_id: int) -> bool:
+        if user_id == 4:
+            self.db.Reviews.update_one({"rid": r_id}, {"$push": {"usefulness_rate": user_id}})
+        else:
+            cursor = list(self.db.Reviews.find({"rid": r_id, "usefulness_rate":  user_id}))
+            if (len(cursor) > 0 ): 
+                self.db.Reviews.update_one({"rid": r_id},{ "$pull": { 'usefulness_rate': user_id }})
+            else:
+                 self.db.Reviews.update_one({"rid": r_id}, {"$push": {"usefulness_rate": user_id}})
+        return True
 
             
 #passwords = username
 
 if __name__ == '__main__':
     db = Database()
+   
     print('User testing:')
     user = db.get_user_data('anon', 'anon')
     print(f'User information: {user}')
