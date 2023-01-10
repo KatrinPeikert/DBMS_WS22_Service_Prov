@@ -36,11 +36,14 @@ export default function AddUserPage() {
             <div class="bg-image background ">
                 <h2 class="header-login" >Create a new account with us! </h2>
                 <hr></hr>
-                <div class="login-wrapper" >
+                <div class="login-form" >
                     <h3 class="alert alert-success">Success!</h3>
-                    You can now login with this User data!
+                    <p>You can now login with this User data!</p>
                     <hr></hr>
-                    <Link class=" btn new-user-box-link " to="/"> Back to Login</Link></div>
+                    <div class="link_user_page text-center">
+                        <Link class="new-user-box-link" to="/"> Back to Login </Link>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -49,21 +52,25 @@ export default function AddUserPage() {
             <div class="bg-image background ">
                 <h2 class="header-login" >Create a new account with us! </h2>
                 <hr></hr>
-                <div class="login-wrapper " >
+                <div class="login-form " >
                     <h3 class="alert alert-danger">An Error has occured!</h3>
-                    Your username is already taken! Please choose another one
+                    <p>Your username is already taken! Please choose another one</p>
                     <hr></hr>
                     <form onSubmit={submitThis}>
-                        <div>
-                            <label htmlFor="user"> Your Username</label><br />
-                            <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                        <div class="content">
+                            <div class="input-field">
+                                <label htmlFor="user"> Your Username</label><br />
+                                <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                            </div>
+                            <div class="input-field">
+                                <label htmlFor="passw"> Your Password</label><br />
+                                <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                            </div>
+                            <br />
                         </div>
-                        <div>
-                            <label htmlFor="passw"> Your Password</label><br />
-                            <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                        <div class="action">
+                            <button type="submit"> Register</button>
                         </div>
-
-                        <button class="button-login" type="submit" >Submit</button>
                     </form>
                 </div>
             </div>
@@ -75,18 +82,22 @@ export default function AddUserPage() {
             <h2 class="header-login" >Create a new account with us!</h2>
             <hr></hr>
 
-            <div class="login-wrapper">
+            <div class="login-form">
                 <form onSubmit={submitThis}>
-                    <div>
-                        <label htmlFor="user"> Your Username</label><br />
-                        <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                    <div class="content">
+                        <div class="input-field">
+                            <label htmlFor="user"> Your Username</label><br />
+                            <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                        </div>
+                        <div class="input-field">
+                            <label htmlFor="passw"> Your Password</label><br />
+                            <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                        </div>
+                        <br />
                     </div>
-                    <div>
-                        <label htmlFor="passw"> Your Password</label><br />
-                        <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                    <div class="action">
+                        <button type="submit"> Register</button>
                     </div>
-                    <br />
-                    <button class="button-login" type="submit" >Submit</button>
                 </form>
             </div>
         </div>

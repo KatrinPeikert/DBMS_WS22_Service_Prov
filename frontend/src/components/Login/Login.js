@@ -30,7 +30,7 @@ export default function LoginPage({ setToken }) {
         //if (token.token===1){
         //    token.token= 10000000000000000// {user_id:0,key: md5(Date())}
         //}
-       
+
         console.log("token", token)
         setToken(token);
         window.location.reload(false);
@@ -39,31 +39,41 @@ export default function LoginPage({ setToken }) {
 
         <div class="bg-image background ">
             <div class="row">
-                <h2 class="header-login">Welcome!</h2> <hr></hr>
+                <h2 class="header-login">Web application to review service providers</h2> <hr></hr>
             </div>
-            <div class="row">
-                <div className='new-user-box '> <Link class="btn new-user-box-link" to="/new_user"> Create a new User Account </Link> </div>
 
-                <div className="login-wrapper">
-                    <form onSubmit={submitThis}>
-                        <div>
-                            <label htmlFor="user">Username</label> <br />
+
+
+            <div class="login-form">
+                <form onSubmit={submitThis}>
+                    <h1>Login</h1>
+                    <div class="content">
+                        <div class="input-field">
+                            <label htmlFor="user">Username</label>
                             <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
                         </div>
-                        <div>
-                            <label htmlFor="passw">Password</label><br />
-                            <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                        <div class="input-field">
+                            <label htmlFor="passw">Password </label><br />
+                            <input type="password" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
                         </div>
+                        <input type="checkbox" id="anon" checked={isAnon} onChange={(e) => setIsAnon(!isAnon)} /> <span>Log In Anonymous</span><br />
+                    </div>
+                    <div class="action">
+                        <button type="submit"> Login</button>
+                    </div>
+                </form>
 
-
-                        <hr></hr>
-                        <input type="checkbox" id="anon" checked={isAnon} onChange={(e) => setIsAnon(!isAnon)} />
-                        <span>Log In Anonymous</span><br />
-                        <button class="button-login" type="submit" >Login</button>
-                    </form>
+                <div class="link_user_page text-center">
+                    <Link class="new-user-box-link" to="/new_user"> Create a new User Account </Link>
                 </div>
+
+
             </div>
+
+
         </div>
+
+
     )
 }
 

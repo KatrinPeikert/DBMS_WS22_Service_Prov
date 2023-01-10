@@ -2,3 +2,5 @@
 __pycache__
 frontend/package-lock.json
 frontend/src/pages/login3.js
+frontend/src/components/Login/Login_copy.css
+frontend/src/components/Login/Login_copy.js
