@@ -63,9 +63,8 @@ const GetServices = () =>{
 
     try{  
             return <div>
-                <h1>Your search-results for {keyword} of type "{type}":</h1>
+                <h1>Your search-results for the {type} "{keyword}":</h1>
                 <br />
-                <p>It can be foud at:</p>
                 <div>
                 <table class="table table-striped">
                     <thead  class="thead-light">
@@ -75,7 +74,7 @@ const GetServices = () =>{
                         <th>Sector</th>
                         <th>Address</th>
                         <th>Rating</th>
-                        <th>Details</th>
+                        <th></th>
                         </tr>
                 </thead>
                 <tbody>
@@ -86,10 +85,10 @@ const GetServices = () =>{
                 </div>
     }
     catch {
-        return <><h2>No Services found</h2><br /><br />
+        return <><h2>No Services found</h2>
         <FuzzyWordsList queryType={type} response={services.data}></FuzzyWordsList>
-        <p><Link to ="/search">Go back</Link><br />
-        <Link to ="/addService">Create a new service</Link><br />
+        <br /><br />
+        <p><Link to ="/search"><button type="button" class="btn btn-secondary">Go back</button></Link>   <Link to ="/addService"><button type="button" class="btn btn-secondary">Create a new service</button></Link><br />
         </p> </>
     }
     }

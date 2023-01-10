@@ -29,7 +29,8 @@ const SearchPage = () => {
   }
 
 return (
-  <>
+  <container>
+ 
      <h2> Search by name:</h2>
      <Form onSubmit={handleSubmitName}>
       <Form.Group className="mb-3" controlId="formName">
@@ -38,10 +39,11 @@ return (
         <Form.Text className="text-muted" >
         </Form.Text>
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="btn btn-secondary" type="submit">
         Search
       </Button>
     </Form>
+ 
     <h2> Search by sector:</h2>
     <Form onSubmit={handleSubmitSector}>
 
@@ -51,11 +53,12 @@ return (
         <Form.Text className="text-muted">
         </Form.Text>
       </Form.Group>
-       <Button variant="primary" type="submit">
+       <Button variant="btn btn-secondary" type="submit">
         Search
       </Button>
     </Form>
-  </>
+ 
+  </container>
 );
 }
 

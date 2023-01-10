@@ -63,9 +63,8 @@ const ServicePage =  (probs) =>{
     console.log("service:", service)
     try {
         return <>
-        you are logged in as user with id {probs.token}
         <h2>{service.name}</h2>
-        <h2><Rating service_id={id} ratings={service.ratings}/></h2>
+        <Rating service_id={id} ratings={service.ratings}/>
         
         <h3>Address:</h3>
         <div>

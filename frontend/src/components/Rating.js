@@ -80,8 +80,10 @@ const Rating = (probs) => {
             return <>
             {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
             {HStarMap.map((item,index)=>{return <span key={index}><HalfStar /></span>})}
-            {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})}
+            {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})} 
+            <p ><small>{probs.ratings.length} user(s) rated.</small></p>
             
+       
             
             
             </>

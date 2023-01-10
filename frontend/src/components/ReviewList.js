@@ -14,8 +14,8 @@ const ReviewList =  (probs) =>{
     console.log(id)
 
     try {
-        return <div>{probs.list.map( (r, key) => <p key={key}>"{r.text}", by {r.login_user} (with user_id: {r.user_id})<br />
-        <Counter r_id={r.rid} usefulness_rate={r.usefulness_rate}/> <CounterButton r_id={r.rid} user_id={probs.token} usefulness_rate={r.usefulness_rate} rating_id={id}/><br /> </p>
+        return <div >{probs.list.map( (r, key) => <p class="card" key={key}><div class="card-body"><h4 class="card-header">{r.login_user} wrote:</h4><p class="card-text">{r.text}</p></div>
+         <div class="card-footer text-muted"><Counter r_id={r.rid} usefulness_rate={r.usefulness_rate}/> <CounterButton r_id={r.rid} user_id={probs.token} usefulness_rate={r.usefulness_rate} rating_id={id}/> </div></p>
         )}
         </div>
     } 

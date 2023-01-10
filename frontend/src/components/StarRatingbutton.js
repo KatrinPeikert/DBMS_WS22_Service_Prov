@@ -68,9 +68,9 @@ const StarRatingButton = (probs) =>{
           return (
             
             <button 
-              type="button"
+            type="button"
               key={index }
-              className={index <= (hover || rating) ? "on" : "off"}
+              className={index <= (hover || rating) ? "btn btn-link on" : "btn btn-link off"}
               onClick={() => StarClickhandler(index)}
               onMouseEnter={() => setHover(index)}
               onMouseLeave={() => setHover(rating)}

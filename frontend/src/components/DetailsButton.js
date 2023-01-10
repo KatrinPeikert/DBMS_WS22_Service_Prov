@@ -7,7 +7,7 @@ import {
 
 export default function DetailsButton(probs) {
     const l = "/service/" +probs.id;
-    return <Link to ={l}>See reviews and details</Link>
+    return <Link to ={l}><button type="button" class="btn btn-light">See reviews and details</button></Link>
 
 
 
