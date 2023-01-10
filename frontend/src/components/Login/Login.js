@@ -25,11 +25,7 @@ export default function LoginPage({ setToken }) {
             user,
             passw,
             isAnon
-        });
-        //this will create a session key for anon:
-        //if (token.token===1){
-        //    token.token= 10000000000000000// {user_id:0,key: md5(Date())}
-        //}
+        });      
 
         console.log("token", token)
         setToken(token);

@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import cors from "cors";
 import { 
     Link,
@@ -55,18 +57,18 @@ const GetServices = () =>{
 
             }
             fetchAllServices();
-    },[type, keyword] ); //evtl muss hier ein [] ans ende
+    },[type, keyword] ); 
     console.log("services: ", services)
     console.log(services)
 
     try{  
             return <div>
-                <h1>Result:</h1>
+                <h1>Your search-results for {keyword} of type "{type}":</h1>
                 <br />
                 <p>It can be foud at:</p>
                 <div>
-                <table>
-                    <thead>
+                <table class="table table-striped">
+                    <thead  class="thead-light">
                         <tr>
                         <th>ID</th>
                         <th>Name</th>
