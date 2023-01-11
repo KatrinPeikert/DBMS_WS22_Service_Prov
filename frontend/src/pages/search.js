@@ -4,6 +4,9 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const SearchPage = () => {
   const navigate =useNavigate()
@@ -29,12 +32,15 @@ const SearchPage = () => {
   }
 
 return (
-  <container>
+  <Container className="Form">
  
-     <h2> Search by name:</h2>
+   
+      <Row>
+        <Col>
+        <h2> Search by name:</h2>
+
      <Form onSubmit={handleSubmitName}>
       <Form.Group className="mb-3" controlId="formName">
-        <Form.Label>Name</Form.Label>
         <Form.Control type="text" required name="name" value={query.name} onChange={changeHandler}/>
         <Form.Text className="text-muted" >
         </Form.Text>
@@ -43,12 +49,12 @@ return (
         Search
       </Button>
     </Form>
- 
+  </Col>
+  <Col>
     <h2> Search by sector:</h2>
     <Form onSubmit={handleSubmitSector}>
 
       <Form.Group className="mb-3" controlId="formSector">
-        <Form.Label>Sector</Form.Label>
         <Form.Control type="text" required name="sector" value={query.sector} onChange={changeHandler} />
         <Form.Text className="text-muted">
         </Form.Text>
@@ -57,8 +63,10 @@ return (
         Search
       </Button>
     </Form>
- 
-  </container>
+    </Col>
+    </Row>
+
+  </Container>
 );
 }
 

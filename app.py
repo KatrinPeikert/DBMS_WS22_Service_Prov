@@ -32,9 +32,9 @@ def getServices():
 @website.route("/api/getServicesBySector/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
 def getServicesBySector():
-    if request.values['sector'] != None:        
+    try:   
         response =  db.get_service_prov_by_sector(request.values['sector'])
-    else:
+    except:
         response = {"status": "error"}   
     response = json_util.dumps(response)
     return response  

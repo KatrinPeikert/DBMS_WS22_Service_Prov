@@ -2,6 +2,11 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const AddService = () => {
   const navigate =useNavigate()
@@ -51,24 +56,61 @@ const AddService = () => {
   }
 
   return (
-    <>      
+    <Container>
+    <Row>
     <h2>Add a new service</h2>
-    <div className="Form">
-      <form>
-    <input type="text" placeholder="name" name="name" required onChange={changeHandler}/>
-    <input type="text" placeholder="sector" name="sector" required onChange={changeHandler}/>
-    <input type="text" placeholder="street" name="street" required onChange={changeHandler}/>
-    <input type="number" placeholder="street number" name="no" min="0" required onChange={changeHandler}/>
-    <input type="text" placeholder="city" name="city" required onChange={changeHandler}/>
-    <input type="number" placeholder="zip code" name="zip" min="0" required onChange={changeHandler}/>
+    </Row>      
+    <Row className="Form">
+      <Form onSubmit={clickHander}>
+    <Form.Group className="mb-3" controlId="formName">
 
-    <button type="submit" onClick={clickHander}>Add to Database</button>
-    </form>
+    <Col md={4}>
+    <Form.Control type="text" placeholder="name" name="name" required onChange={changeHandler}/>
+    </Col> 
+    </Form.Group>
+  
+    <Form.Group className="mb-3" controlId="formName">
+  <Col md={4}>
+    <Form.Control type="text" placeholder="sector" name="sector" required onChange={changeHandler} />
+    </Col>   
+    </Form.Group>  
+  <Form.Group className="mb-3" controlId="formName">
+    <Col md={4}>
+    <Form.Control type="text" placeholder="street" name="street" required onChange={changeHandler}/>
+    </Col> 
+    </Form.Group>  
+    <Form.Group className="mb-3" controlId="formName">    
+    <Col md={4}>
+    <Form.Control type="number" placeholder="street number" name="no" min="0" required onChange={changeHandler}/>
+    
+    </Col>  
+    </Form.Group>  
+  <Form.Group className="mb-3" controlId="formName">  
+    
+    <Col md={4}>
+    <Form.Control type="text" placeholder="city" name="city" required onChange={changeHandler}/>
+    </Col>   
+    </Form.Group>
+  
+  <Form.Group className="mb-3" controlId="formName">
+    
+    <Col md={4}>
+    <Form.Control type="number" placeholder="zip code" name="zip" min="0" required onChange={changeHandler}/>
+    </Col>  
+    </Form.Group>
+  
+  <Form.Group className="mb-3" controlId="formName">
+    
+    <Col md={4}>
+    <Button type="submit" variant="btn btn-secondary" >Add to Database</Button>
+    </Col> 
+    </Form.Group>
+    </Form>
     {exists && <b>This Service allready exists.</b>}
-    </div>
+    </Row>
 
 
-    </>
+    </Container>
   );
 }
 

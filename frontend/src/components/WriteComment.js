@@ -2,7 +2,10 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 
 const WriteComment =(probs) =>{
@@ -37,12 +40,17 @@ const WriteComment =(probs) =>{
     }
     return    <>      
     <h3>Write new comment</h3>
-    <div className="Form">
+    
       <form>
-      <input type="text" placeholder="commentText" name="commentText" required onChange={changeHandler}/>
-      <button type="submit" onClick={clickHander}>Send</button>
+      <Container className="Form">
+      <Row>
+        <Col md={4}>
+      <input class="form-control" type="text" placeholder="" name="commentText" required onChange={changeHandler}/></Col><Col><Button variant="btn btn-secondary" type="submit" onClick={clickHander}>Send</Button></Col>
+      </Row>
+    </Container>
+    
     </form>
-    </div>
+
     </> 
 
 }

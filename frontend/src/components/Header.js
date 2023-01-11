@@ -8,6 +8,7 @@ import Navigation from './Navigation';
 
 const HeaderStyle = styled.header`
     width: 100%;
+    padding: 10px;
     display: flex;
     height: 140px;
     align-items: center;
@@ -45,8 +46,7 @@ export default function Header() {/*
     } */
     return (<header>
         <HeaderStyle>
-            <img src={ReactLogo} alt="" height="120" />
-            <h1 >Web application to review service providers</h1>
+            <h1 >  Web application to review service providers</h1>
             
             
         </HeaderStyle>
