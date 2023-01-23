@@ -143,7 +143,7 @@ class Database:
             if rating field exists, it will add or update a rating-obj for this user
         """
         save_id = self.convert_uid(user_id, ip)
-        print(user_id, save_id)
+        #print(user_id, save_id)
         cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
         if (len(cursor) > 0):
             cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": save_id}}}))

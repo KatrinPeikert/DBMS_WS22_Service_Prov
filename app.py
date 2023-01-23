@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, g, session
 from DatabaseAPI import Database
 from flask_cors import cross_origin #for api-access from react
 from bson import json_util
+import re
 
 db = Database()
 website = Flask(__name__)
@@ -179,15 +180,31 @@ def after_request(response):
                         response.headers["Access-Control-Allow-Origin"] = origin
     return response
 
+
+def password_insecure(password_candidate:str) -> bool:
+    """Checks whether password contains 1 uppercase letter, 1 lower case letter and 1 number.
+        Checks whether password is at least 8 characters long.
+    """
+    password_insecure = False
+    if len(password_candidate) > 8 and re.search(r'[0-9]', password_candidate
+        )  and re.search(r'[a-z]', password_candidate) and re.search(
+            r'[A-Z]', password_candidate):
+        password_insecure = False
+    else:
+        password_insecure = True
+    return password_insecure
+
+
+
 @website.route("/add_new_user", methods=['POST'])
 def add_new_user():
     if request.method == 'POST':
         username = str(request.json["user"])
         password = str(request.json["passw"])
-        
+        if password_insecure(password):
+            return jsonify({"user_status": "passw_error"})
         is_user_set = db.set_user(username, password)
         if is_user_set:
-            
             return jsonify({"user_status": "success"})
         else:
             return jsonify({"user_status": "name_error"})

@@ -76,6 +76,35 @@ export default function AddUserPage() {
             </div>
         )
     }
+    if (newUser === "passw_error") {
+        return (
+            <div class="bg-image background ">
+                <h2 class="header-login" >Create a new account with us! </h2>
+                <hr></hr>
+                <div class="login-form " >
+                    <h3 class="alert alert-danger">An Error has occured!</h3>
+                    <p>Your  Password has to be at least 8 characters and use at least 1 uppercase letter, 1 lowercase letter and a number</p>
+                    <hr></hr>
+                    <form onSubmit={submitThis}>
+                        <div class="content">
+                            <div class="input-field">
+                                <label htmlFor="user"> Your Username</label><br />
+                                <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)} />
+                            </div>
+                            <div class="input-field">
+                                <label htmlFor="passw"> Your Password</label><br />
+                                <input type="text" name="passw" id="passw" value={passw} onChange={(e) => setPassw(e.target.value)} />
+                            </div>
+                            <br />
+                        </div>
+                        <div class="action">
+                            <button type="submit"> Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div class="bg-image background ">
