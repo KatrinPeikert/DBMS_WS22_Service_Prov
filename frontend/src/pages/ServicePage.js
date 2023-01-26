@@ -28,6 +28,7 @@ const ServicePage =  (probs) =>{
         reviews:[
 
         ],
+        additional_data: [],
         ip_hash:""
 
 
@@ -70,6 +71,7 @@ const ServicePage =  (probs) =>{
         <div>
         {service.address[0].street} {service.address.number}, {service.address[0].area_code} {service.address[0].city}
         </div>
+        {service.additional_data.map((entry, key) => <span key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</span>)}
         <div>
         <StarRatingButton serviceId={id} user_id={probs.token}  ratings={service.ratings}/>
         </div>

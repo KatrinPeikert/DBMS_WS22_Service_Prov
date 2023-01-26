@@ -14,7 +14,8 @@
         "ratings":[
             
         ],
-        "store_manager": "Max Miller"
+        "additional_data": [{"store_manager": "Max Miller"}]
+        
     },
     {
         "sid": 2,
@@ -30,6 +31,8 @@
         ],
         "ratings":[
 
-        ]
+        ],
+        "additional_data": []
+
     }
 ]

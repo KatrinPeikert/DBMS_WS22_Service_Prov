@@ -7,16 +7,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import AddFields from "../components/AddFields"
 
 const AddService = () => {
   const navigate = useNavigate()
 
   const [Service, setService] = useState({
-    name: "", sector: "", street: "", no: "", city: "", zip: "",
+    name: "", sector: "", street: "", no: "", city: "", zip: "",additionalInfo: []
   });
   const [exists, setExists] = useState(false)
   const changeHandler = (e) => {
     setService(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    console.log(Service)
+
   };
   const clickHander = async (e) => {
     e.preventDefault();
@@ -28,7 +31,8 @@ const AddService = () => {
         street: Service.street,
         no: Service.no,
         city: Service.city,
-        zip: Service.zip
+        zip: Service.zip,
+        additional_info:Service.additionalInfo
       });
       console.log(request)
       const response = await axios.post(request);
@@ -98,13 +102,18 @@ const AddService = () => {
               <Form.Control type="number" placeholder="zip code" name="zip" min="0" required onChange={changeHandler} />
             </Col>
           </Form.Group>
-
+          <Form.Group>
+          <Col md={4}>
+            <AddFields name="additionalInfo" onChange={changeHandler}/>
+            </Col>
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
               <Button type="submit" variant="btn btn-secondary" >Add to Database</Button>
             </Col>
           </Form.Group>
+        
         </Form>
         {exists && <b>This Service already exists.</b>}
       </Row>
