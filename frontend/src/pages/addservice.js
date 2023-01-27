@@ -52,7 +52,7 @@ const AddService = () => {
         if (response.data.status === "OK")
           try {
             const link = "/service/" + response.data.service_id
-            //navigate(link);
+            navigate(link);
           }
           catch (error) {
 
