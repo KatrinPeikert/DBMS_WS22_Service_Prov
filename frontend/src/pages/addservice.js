@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -15,6 +15,10 @@ const AddService = () => {
     name: "", sector: "", street: "", no: "", city: "", zip: "",additionalInfo: []
   });
   const [exists, setExists] = useState(false)  //to display status msg
+
+
+
+
   const changeHandler = (e) => {
     setService(prev => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(Service)
@@ -25,7 +29,7 @@ const AddService = () => {
 
     try {
       console.log("add info", Service.additionalInfo)
-      var additionalInfo_cleaned = Service.additionalInfo.filter((elem) => {return elem.name !== undefined && elem.value !== undefined});
+      var additionalInfo_cleaned = Service.additionalInfo.filter((elem) => {return elem.name !== "" && elem.value !== ""});
       additionalInfo_cleaned = additionalInfo_cleaned.map((elem) =>{
         return String(elem.name) + "|~|" + String(elem.value)
 
@@ -44,8 +48,11 @@ const AddService = () => {
       console.log(request)
       const response = await axios.post(request);
       console.log(response.data);
-      if (response.data.status === "Service already exists") {
+      if (response.data.status === "Service allready exists") {
+        console.log(exists)
+
         setExists(true);
+        console.log(exists)
       }
       else {
         setExists(false);
@@ -70,7 +77,10 @@ const AddService = () => {
   const addFieldChangeHandler = (event) =>{
 
       var index =  event.target.id.split("_")[1]
-      console.log(index)
+      console.log(index, event.target.name)
+      if (Service.additionalInfo[index] === undefined){
+        Service.additionalInfo[index] = {id:index, name: "", value: ""}
+      } 
 
       if (event.target.name ==="Fieldname"){
         Service.additionalInfo[index].name = event.target.value;        
@@ -78,32 +88,41 @@ const AddService = () => {
       else{
         Service.additionalInfo[index].value = event.target.value;   
       }
-      console.log(Service.additionalInfo)
       setService(Service)
+
+      console.log(Service.additionalInfo)
       
       
   }
   const removeField = (event) =>{
-    var index =  event.target.id.split("_")[1]
+    event.preventDefault();
+    var index =  event.target.id.split("_")[2]
+    console.log("formgroup_"+ index)
+    try {
+      Service.additionalInfo[index].name = "";
+      Service.additionalInfo[index].value = "";
+    }
+    catch (error){
 
-    document.getElementById("formgroup_"+ index).remove()
-    Service.additionalInfo[index].name = undefined
-    Service.additionalInfo[index].value = undefined
+    }
     setService(Service)
+    document.getElementById("formgroup_"+ index).remove()
+
 
 
   }
 
-  //dynamic fields for additional infos:
+  //dynamic fields for additional infos:  
   const [fields, setFields] = useState(0);
-  var fieldList = [];
+  const fieldList = []; // as a state var?
   for (let i=0; i<fields; i++){
-      Service.additionalInfo[i] = {id:i, name: undefined, value: undefined}
-      fieldList.push(<Form.Group key={i} onChange={addFieldChangeHandler} id={"formgroup_"+i}><span><Form.Control type="text" num={i} placeholder="Fieldname" name="Fieldname" id={"additinalNameField_"+i} required  /><Form.Control id={"additinalValueField_"+i}type="text" placeholder="value" name="value" required />
-    <Button  variant="btn btn-light" id={"delete_" +i}onClick={removeField}>removeField</Button></span>
+      
+      fieldList.push(<Form.Group key={i} onChange={addFieldChangeHandler} id={"formgroup_"+i}><span><Form.Control type="text" num={i} placeholder="Fieldname" name="Fieldname" id={"additinalNameField_"+i} required  /><Form.Control id={"additinalValueField_"+i} type="text" placeholder="value" name="value" required />
+    <Button  id={"delete_utton_"+i} variant="btn btn-light" onClick={removeField}>removeField</Button></span>
 
     <br/><br/></ Form.Group >)
       }
+
 
   return (
     <Container>

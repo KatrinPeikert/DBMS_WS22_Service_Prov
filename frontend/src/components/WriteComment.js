@@ -22,6 +22,7 @@ const WriteComment =(probs) =>{
       };
     const clickHander = async(e) =>{
         e.preventDefault();    
+        if (comment.commentText !== ""){
         try {
             const request = 'http://127.0.0.1:5000/api/addReview?' + new URLSearchParams({
                 text: comment.commentText,     
@@ -29,9 +30,7 @@ const WriteComment =(probs) =>{
                 user_id: probs.user_id 
                 });
                 console.log(request)
-                setComment({
-                  commentText:""
-                })
+                document.getElementById("commentInputfield").value="";
               const respone = await axios.post(request);
               console.log(respone);
               probs.switch()
@@ -42,6 +41,7 @@ const WriteComment =(probs) =>{
             console.log(error);
             navigate("/error")
         }
+      }
     }
     return    <>      
     <h3>Write new comment</h3>
@@ -50,7 +50,7 @@ const WriteComment =(probs) =>{
       <Container className="Form">
       <Row>
         <Col md={4}>
-      <input class="form-control" type="text" placeholder="" name="commentText" required onChange={changeHandler}/></Col><Col><Button variant="btn btn-secondary" type="submit" onClick={clickHander}>Send</Button></Col>
+      <input class="form-control" id="commentInputfield"type="text" name="commentText" required onChange={changeHandler}/></Col><Col><Button variant="btn btn-secondary" type="submit" onClick={clickHander}>Send</Button></Col>
       </Row>
     </Container>
     

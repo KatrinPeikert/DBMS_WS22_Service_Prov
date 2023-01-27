@@ -30,25 +30,8 @@ const ServicePage =  (probs) =>{
     const reloadFkt =() =>{
         setReloader(!reloader)
     }
-/*
-    const [service, setService] = useState({   
-        sid: "",
-        name: "",
-        sector: "",
-        address: [
-            
-        ],
-        ratings:[
-            
-        ],
-        reviews:[
 
-        ],
-        additional_data: [],
-        ip_hash:""
-
-
-    }); //Database response */
+    //Api request
     useEffect(() => {
 
         const fetchService = async () => {
@@ -83,19 +66,22 @@ const ServicePage =  (probs) =>{
         fetchService();
         
         }
-    ,[id, navigate, reloader] ); //state
+    ,[id, navigate, reloader] ); 
 
-    console.log("service:", sid, name, sector, ip_hash, address, ratings, reviews, additional_data)
     try {
         return <>
         <h2>{name}</h2>
+        <b>Sector: {sector}</b><br />
         <Rating service_id={id} ratings={ratings}/>
         
+       
         <h3>Address:</h3>
         <div>
         {address[0].street} {address.number}, {address[0].area_code} {address[0].city}
         </div>
-        {additional_data.map((entry, key) => <span key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</span>)}
+        <div>
+        {additional_data.map((entry, key) => <p key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</p>)}
+        </div>
         <div>
         <StarRatingButton switch={reloadFkt} serviceId={id} user_id={probs.token}  ratings={ratings}/>
         </div>
