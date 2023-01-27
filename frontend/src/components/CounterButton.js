@@ -22,7 +22,8 @@ const CounterButton = (probs) =>{
                 r_id: r_id,
               });
             await axios.post(request);
-            window.location.reload();
+            probs.switch()
+            //window.location.reload();
 
             }
         catch (error){

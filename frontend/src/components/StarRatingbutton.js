@@ -34,7 +34,7 @@ const StarRatingButton = (probs) =>{
 
       }
       getUserRating();
-    },[probs.user_id, probs.serviceId] )
+    },[probs.user_id, probs.serviceId,navigate] )
 
 
     const StarClickhandler = async (index) =>{
@@ -48,7 +48,7 @@ const StarRatingButton = (probs) =>{
               });
             const res = await axios.post(request);
             console.log("rating response", res.data)
-            window.location.reload();
+            probs.switch()
 
             }
         catch (error){

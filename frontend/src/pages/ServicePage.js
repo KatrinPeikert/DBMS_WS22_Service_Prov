@@ -13,8 +13,24 @@ import Rating from "../components/Rating"
 const ServicePage =  (probs) =>{
     const navigate =useNavigate()
 
-    //const [state, setState] = useState(1)
     const {id} = useParams(); //given params to perform query
+
+    //save quer results:
+    const [sid, setSid] = useState();
+    const [name, setName] = useState();
+    const [sector, setSector] = useState();
+    const [ip_hash, setIphash] = useState();
+    const [address, setAddres] = useState([])
+    const [ratings, setRatings] = useState([])
+    const [reviews, setReviews] = useState([])
+    const [additional_data, setAdditional_data] = useState([])
+    const [reloader, setReloader] = useState(true)
+
+    //switch state to be calles by child-components to trigger page reload
+    const reloadFkt =() =>{
+        setReloader(!reloader)
+    }
+/*
     const [service, setService] = useState({   
         sid: "",
         name: "",
@@ -32,8 +48,7 @@ const ServicePage =  (probs) =>{
         ip_hash:""
 
 
-    }); //Database response
-    //const [reviews, setReviews] = useState([])
+    }); //Database response */
     useEffect(() => {
 
         const fetchService = async () => {
@@ -48,7 +63,16 @@ const ServicePage =  (probs) =>{
                        'Content-Type': 'application/json'
                     }}) ;
 
-                setService(res.data)
+                //setService(res.data)
+                setSid(res.data.sid)
+                setName(res.data.name)
+                setSector(res.data.sector)
+                setIphash(res.data.ip_hash)
+                setAddres(res.data.address)
+                setRatings(res.data.ratings)
+                setReviews(res.data.reviews)
+
+                setAdditional_data(res.data.additional_data)
             } catch (error) {
                 console.log("error", error); 
                 navigate("/error")
@@ -59,25 +83,25 @@ const ServicePage =  (probs) =>{
         fetchService();
         
         }
-    ,[id] ); //state
+    ,[id, navigate, reloader] ); //state
 
-    console.log("service:", service)
+    console.log("service:", sid, name, sector, ip_hash, address, ratings, reviews, additional_data)
     try {
         return <>
-        <h2>{service.name}</h2>
-        <Rating service_id={id} ratings={service.ratings}/>
+        <h2>{name}</h2>
+        <Rating service_id={id} ratings={ratings}/>
         
         <h3>Address:</h3>
         <div>
-        {service.address[0].street} {service.address.number}, {service.address[0].area_code} {service.address[0].city}
+        {address[0].street} {address.number}, {address[0].area_code} {address[0].city}
         </div>
-        {service.additional_data.map((entry, key) => <span key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</span>)}
+        {additional_data.map((entry, key) => <span key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</span>)}
         <div>
-        <StarRatingButton serviceId={id} user_id={probs.token}  ratings={service.ratings}/>
+        <StarRatingButton switch={reloadFkt} serviceId={id} user_id={probs.token}  ratings={ratings}/>
         </div>
         <h3>User comments :</h3>
-        <ReviewList list ={service.reviews} token={probs.token} ipHash = {service.ip_hash}/>
-        <WriteComment service_id={id} user_id={probs.token}/>
+        <ReviewList switch={reloadFkt} list ={reviews} token={probs.token} ipHash = {ip_hash}/>
+        <WriteComment switch={reloadFkt} service_id={id} user_id={probs.token}/>
         </>
 
 

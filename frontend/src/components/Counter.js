@@ -10,7 +10,7 @@ const Counter = (probs) =>{
         setNum(probs.usefulness_rate.length)
 
 
-    },[])
+    },[probs])
     return <>{num} user found this comment usefull.</>
 
 }

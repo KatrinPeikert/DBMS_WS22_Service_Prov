@@ -17,6 +17,7 @@ const WriteComment =(probs) =>{
     const changeHandler = (e) =>{
 
                 setComment(prev=>({...prev, [e.target.name]: e.target.value }))
+                
 
       };
     const clickHander = async(e) =>{
@@ -28,9 +29,13 @@ const WriteComment =(probs) =>{
                 user_id: probs.user_id 
                 });
                 console.log(request)
+                setComment({
+                  commentText:""
+                })
               const respone = await axios.post(request);
               console.log(respone);
-              window.location.reload();
+              probs.switch()
+              //window.location.reload();
 
         }
         catch (error) {

@@ -17,7 +17,7 @@ const ReviewList =  (probs) =>{
 
     try {
         return  <Container ><Row>{probs.list.map( (r, key) => <Col md={4}><p class="card" key={key}><div class="card-body"><h4 class="card-header">{r.login_user} wrote:</h4><p class="card-text">{r.text}</p></div>
-         <div class="card-footer text-muted"><Counter r_id={r.rid} usefulness_rate={r.usefulness_rate}/> <CounterButton r_id={r.rid} user_id={probs.token} usefulness_rate={r.usefulness_rate} rating_id={id}/> </div></p></Col>
+         <div class="card-footer text-muted"><Counter r_id={r.rid} usefulness_rate={r.usefulness_rate}/> <CounterButton switch ={probs.switch} r_id={r.rid} user_id={probs.token} usefulness_rate={r.usefulness_rate} rating_id={id}/> </div></p></Col>
         )}
        </Row></Container>
     } 
