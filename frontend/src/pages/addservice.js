@@ -24,6 +24,14 @@ const AddService = () => {
     e.preventDefault();
 
     try {
+      console.log("add info", Service.additionalInfo)
+      var additionalInfo_cleaned = Service.additionalInfo.filter((elem) => {return elem.name !== undefined && elem.value !== undefined});
+      additionalInfo_cleaned = additionalInfo_cleaned.map((elem) =>{
+        return String(elem.name) + "|~|" + String(elem.value)
+
+      }).join('~~~');
+      console.log("cleanded", additionalInfo_cleaned);
+
       const request = 'http://127.0.0.1:5000/api/addServices?' + new URLSearchParams({
         name: Service.name,
         sector: Service.sector,
@@ -31,7 +39,7 @@ const AddService = () => {
         no: Service.no,
         city: Service.city,
         zip: Service.zip,
-        additional_info:Service.additionalInfo
+        additional_info: additionalInfo_cleaned
       });
       console.log(request)
       const response = await axios.post(request);
@@ -44,7 +52,7 @@ const AddService = () => {
         if (response.data.status === "OK")
           try {
             const link = "/service/" + response.data.service_id
-            navigate(link);
+            //navigate(link);
           }
           catch (error) {
 
@@ -62,10 +70,8 @@ const AddService = () => {
   const addFieldChangeHandler = (event) =>{
 
       var index =  event.target.id.split("_")[1]
-      //if (Service.additionalInfo[index] === undefined){
-      //  Service.additionalInfo[index] = {id:index, name: undefined, value: undefined}
-      //  
-      //}
+      console.log(index)
+
       if (event.target.name ==="Fieldname"){
         Service.additionalInfo[index].name = event.target.value;        
       }
@@ -73,16 +79,18 @@ const AddService = () => {
         Service.additionalInfo[index].value = event.target.value;   
       }
       console.log(Service.additionalInfo)
+      setService(Service)
       
       
   }
   const removeField = (event) =>{
     var index =  event.target.id.split("_")[1]
 
-    console.log(index)
     document.getElementById("formgroup_"+ index).remove()
     Service.additionalInfo[index].name = undefined
     Service.additionalInfo[index].value = undefined
+    setService(Service)
+
 
   }
 

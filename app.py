@@ -94,13 +94,20 @@ def get_user_name():
 @website.route("/api/addServices/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
 def addServices():
-    keys = ['name', 'street', 'no', 'zip', 'city', 'sector']
+    keys = ['name', 'street', 'no', 'zip', 'city', 'sector', 'additional_info']
     for k in keys:
         if request.values[k] =='':
             return {"status": "error", "val": k}   
     
     try:
-        result = db.set_service_prov(request.values['name'], {"street":request.values['street'],"number": request.values['no'], "area_code":request.values['zip'],"city":request.values['city'] },request.values['sector'] )
+        info_dict = {}
+        additional_info = request.values['additional_info'].split("~~~")
+        for i in additional_info:
+            k,v = i.split("|~|")
+            info_dict[k] = v
+            print(info_dict)
+        
+        result = db.set_service_prov(request.values['name'], {"street":request.values['street'],"number": request.values['no'], "area_code":request.values['zip'],"city":request.values['city'] },request.values['sector'], additional_info=info_dict )
         if result is None:
             return {"status": "Service allready exists"}
         return {"status": "OK", "service_id": result}

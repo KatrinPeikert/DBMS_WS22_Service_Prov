@@ -102,9 +102,11 @@ class Database:
         """
         service_id = self.db.Services.find().sort('sid', -1).limit(1)[0]['sid'] + 1
         data = {"sid": service_id, "name": name, "address":[address], "sector":sector, "ratings":[], "additional_data": []}
+        info_list =[]
         for key in additional_info.keys():
-            if not(key in data.keys()):
-                data[key] = additional_info[key]
+            #if not(key in data.keys()):
+                info_list.append({key: additional_info[key]})
+        data["additional_data"] =info_list
         if len(list(self.db.Services.find({"name": name, "address":[address], "sector":sector}))) > 0:
             return None
         else:       
