@@ -18,6 +18,7 @@ export default function LoginIndex() {
             <Routes>
                 <Route path="/" element={<Login setToken={setToken} />} />
                 <Route path="/new_user" element={<AdduserPage />} />
+                <Route path="/*" element={<Login setToken={setToken} />} />
             </Routes>
         </LoginLayout>
     )

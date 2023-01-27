@@ -34,6 +34,7 @@ function App() {
         <Route path="/error" element={<ApiError />}></Route>
 
         <Route path="/*" element={<PageNotFound />}></Route>
+
       </Routes>
     </Layout>
 
