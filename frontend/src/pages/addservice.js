@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import AddFields from "../components/AddFields"
 
 const AddService = () => {
   const navigate = useNavigate()
@@ -15,7 +14,7 @@ const AddService = () => {
   const [Service, setService] = useState({
     name: "", sector: "", street: "", no: "", city: "", zip: "",additionalInfo: []
   });
-  const [exists, setExists] = useState(false)
+  const [exists, setExists] = useState(false)  //to display status msg
   const changeHandler = (e) => {
     setService(prev => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(Service)
@@ -58,6 +57,45 @@ const AddService = () => {
     }
 
   }
+
+  //Build fields for additional infos and set state:
+  const addFieldChangeHandler = (event) =>{
+
+      var index =  event.target.id.split("_")[1]
+      //if (Service.additionalInfo[index] === undefined){
+      //  Service.additionalInfo[index] = {id:index, name: undefined, value: undefined}
+      //  
+      //}
+      if (event.target.name ==="Fieldname"){
+        Service.additionalInfo[index].name = event.target.value;        
+      }
+      else{
+        Service.additionalInfo[index].value = event.target.value;   
+      }
+      console.log(Service.additionalInfo)
+      
+      
+  }
+  const removeField = (event) =>{
+    var index =  event.target.id.split("_")[1]
+
+    console.log(index)
+    document.getElementById("formgroup_"+ index).remove()
+    Service.additionalInfo[index].name = undefined
+    Service.additionalInfo[index].value = undefined
+
+  }
+
+  //dynamic fields for additional infos:
+  const [fields, setFields] = useState(0);
+  var fieldList = [];
+  for (let i=0; i<fields; i++){
+      Service.additionalInfo[i] = {id:i, name: undefined, value: undefined}
+      fieldList.push(<Form.Group key={i} onChange={addFieldChangeHandler} id={"formgroup_"+i}><span><Form.Control type="text" num={i} placeholder="Fieldname" name="Fieldname" id={"additinalNameField_"+i} required  /><Form.Control id={"additinalValueField_"+i}type="text" placeholder="value" name="value" required />
+    <Button  variant="btn btn-light" id={"delete_" +i}onClick={removeField}>removeField</Button></span>
+
+    <br/><br/></ Form.Group >)
+      }
 
   return (
     <Container>
@@ -102,11 +140,17 @@ const AddService = () => {
               <Form.Control type="number" placeholder="zip code" name="zip" min="0" required onChange={changeHandler} />
             </Col>
           </Form.Group>
-          <Form.Group>
-          <Col md={4}>
-            <AddFields name="additionalInfo" onChange={changeHandler}/>
+
+            <Col md={4}>
+
+            {fieldList}
+
+            <Form.Group className="mb-3" controlId="formName">
+            <Button variant="btn btn-secondary" onClick={() =>{setFields(fields + 1)}}>Add a new Field</ Button >
+            </Form.Group>
+
             </Col>
-          </Form.Group>
+  
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
