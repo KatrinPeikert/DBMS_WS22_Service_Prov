@@ -55,14 +55,14 @@ const Rating = (probs) => {
 
 
         }
-    }, [probs.ratings])
+    }, [probs, navigate])
     
-    
+    console.log(rating);
     try {
             if (rating === 0){
                 return <>no ratings given</>
             }
-            const stars = parseInt(rating / 1); //number of full stars
+            const stars = parseInt(rating); //number of full stars
 
 
             //var result = String.fromCodePoint(9733).repeat(stars)//"\u2605".repeat(stars);
@@ -77,19 +77,32 @@ const Rating = (probs) => {
             const WStarMap = Array(wStars).fill(0);     
 
             //result = result + "\u2606".repeat(wStars);
+            try{
             return <>
             {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
             {HStarMap.map((item,index)=>{return <span key={index}><HalfStar /></span>})}
-            {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})} 
+            {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})}
             <p ><small>{probs.ratings.length} user(s) rated.</small></p>
+            </>
+            }
+            catch (error){
+                return <>
+                {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
+                {HStarMap.map((item,index)=>{return <span key={index}><HalfStar /></span>})}
+                {WStarMap.map((item,index)=>{return <span key={index}><WhiteStar /></span>})}
+                </>
+            }
+           
             
        
             
             
-            </>
+          
+           
 
         }
     catch (error){
+        console.log(error)
         return <>No ratings</>
     }}
 export default Rating
