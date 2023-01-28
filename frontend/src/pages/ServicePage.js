@@ -75,17 +75,19 @@ const ServicePage =  (probs) =>{
         <Rating service_id={id} ratings={ratings}/>
         
        
-        <h3>Address:</h3>
+        <h4>Address:</h4>
         <div>
         {address[0].street} {address.number}, {address[0].area_code} {address[0].city}
         </div>
+        <hr /> 
         <div>
+        {additional_data[0] !== undefined && <h4>Additional information:</h4>}  
         {additional_data.map((entry, key) => <p key={key}>{Object.keys(entry)[0]}: {entry[Object.keys(entry)[0]]}</p>)}
         </div>
         <div>
         <StarRatingButton switch={reloadFkt} serviceId={id} user_id={probs.token}  ratings={ratings}/>
         </div>
-        <h3>User comments :</h3>
+        {reviews[0] !== undefined && <h3>User comments :</h3>}
         <ReviewList switch={reloadFkt} list ={reviews} token={probs.token} ipHash = {ip_hash}/>
         <WriteComment switch={reloadFkt} service_id={id} user_id={probs.token}/>
         </>

@@ -44,7 +44,7 @@ const WriteComment =(probs) =>{
       }
     }
     return    <>      
-    <h3>Write new comment</h3>
+    <h3>Write new comment:</h3>
     
       <form>
       <Container className="Form">
