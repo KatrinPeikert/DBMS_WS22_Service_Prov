@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import md5 from 'md5-hash'
 async function loginUser(credentials) {
     return fetch('/auth/send', {
         method: 'POST',

@@ -1,8 +1,6 @@
 import * as React from "react";
-import Button from 'react-bootstrap/Button';
 import { 
     Link,
-    useParams
   } from "react-router-dom";
 
 //link to service page
