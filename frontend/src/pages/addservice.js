@@ -117,8 +117,8 @@ const AddService = () => {
   const fieldList = []; // as a state var?
   for (let i=0; i<fields; i++){
       
-      fieldList.push(<Form.Group key={i} onChange={addFieldChangeHandler} id={"formgroup_"+i}><span><Form.Control type="text" num={i} placeholder="Fieldname" name="Fieldname" id={"additinalNameField_"+i} required  /><Form.Control id={"additinalValueField_"+i} type="text" placeholder="value" name="value" required />
-    <Button  id={"delete_utton_"+i} variant="btn btn-light" onClick={removeField}>removeField</Button></span>
+      fieldList.push(<Form.Group key={i} onChange={addFieldChangeHandler} id={"formgroup_"+i}><span><Form.Control type="text" num={i} placeholder="Fieldname" name="Fieldname" id={"additinalNameField_"+i} required  /><Form.Control id={"additinalValueField_"+i} type="text" placeholder="Value" name="value" required />
+    <Button  id={"delete_utton_"+i} variant="btn btn-light" onClick={removeField}>Remove field</Button></span>
 
     <br/><br/></ Form.Group >)
       }
@@ -134,37 +134,37 @@ const AddService = () => {
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
-              <Form.Control type="text" placeholder="name" name="name" required onChange={changeHandler} />
+              <Form.Control type="text" placeholder="Name" name="name" required onChange={changeHandler} />
             </Col>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formName">
             <Col md={4}>
-              <Form.Control type="text" placeholder="sector" name="sector" required onChange={changeHandler} />
+              <Form.Control type="text" placeholder="Sector" name="sector" required onChange={changeHandler} />
             </Col>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formName">
             <Col md={4}>
-              <Form.Control type="text" placeholder="street" name="street" required onChange={changeHandler} />
+              <Form.Control type="text" placeholder="Street" name="street" required onChange={changeHandler} />
             </Col>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formName">
             <Col md={4}>
-              <Form.Control type="number" placeholder="street number" name="no" min="0" required onChange={changeHandler} />
+              <Form.Control type="number" placeholder="Street number" name="no" min="0" required onChange={changeHandler} />
 
             </Col>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
-              <Form.Control type="text" placeholder="city" name="city" required onChange={changeHandler} />
+              <Form.Control type="text" placeholder="City" name="city" required onChange={changeHandler} />
             </Col>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
-              <Form.Control type="number" placeholder="zip code" name="zip" min="0" required onChange={changeHandler} />
+              <Form.Control type="number" placeholder="ZIP code" name="zip" min="0" required onChange={changeHandler} />
             </Col>
           </Form.Group>
 
@@ -173,7 +173,7 @@ const AddService = () => {
             {fieldList}
 
             <Form.Group className="mb-3" controlId="formName">
-            <Button variant="btn btn-secondary" onClick={() =>{setFields(fields + 1)}}>Add a new Field</ Button >
+            <Button variant="btn btn-secondary" onClick={() =>{setFields(fields + 1)}}>Add a new field</ Button >
             </Form.Group>
 
             </Col>
@@ -181,7 +181,7 @@ const AddService = () => {
           <Form.Group className="mb-3" controlId="formName">
 
             <Col md={4}>
-              <Button type="submit" variant="btn btn-secondary" >Add to Database</Button>
+              <Button type="submit" variant="btn btn-secondary" >Add to database</Button>
             </Col>
           </Form.Group>
         
