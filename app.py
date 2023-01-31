@@ -13,8 +13,13 @@ website.secret_key = 'this is a very secret key'
 
 
 @website.route("/api/getServices/", methods=['GET'])
-@cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
+@cross_origin(allow_headers=['Content-Type']) #  allow api-access to this route
 def getServices():
+    """get a lsit of service providers with name
+
+      Returns:
+        json: service list
+    """
     if request.values['name'] != None:        
         response =  db.get_service_prov(request.values['name'])
     else:
@@ -27,6 +32,11 @@ def getServices():
 @website.route("/api/getServicesBySector/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
 def getServicesBySector():
+    """Gets list of services by sector
+
+    Returns:
+        json: service list
+    """
     try:   
         response =  db.get_service_prov_by_sector(request.values['sector'])
     except:
@@ -39,6 +49,11 @@ def getServicesBySector():
 @website.route("/api/getServiceById/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) 
 def get_service_by_id():    
+    """Gets a service provider by id and aggregats with reviews
+
+    Returns:
+        json: service provider
+    """
     try:
         response = db.get_service_prov_by_id(int(request.values['service_id'])) 
         response = list(response)[0]
@@ -54,6 +69,12 @@ def get_service_by_id():
 @website.route("/api/getStarRatingByID/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
 def get_star_rating_by_service_id():
+        """Get all star ratings for a service provider
+
+        Returns:
+            Returns:
+            json: status msg
+        """
         service_id = int(request.values['service_id'])
         ratings  = db.get_star_ratings(service_id)
         ratings_sum = 0
@@ -72,6 +93,10 @@ def get_star_rating_by_service_id():
 @website.route("/api/getUserRating/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
 def get_star_rating_by_user_id():
+    """Get star-rating of a certain user
+    Returns:
+        json: user credentials
+    """
     service_id = int(request.values['s_id'])
     user_id =  int(request.values['user_id'])
     rating = db.get_user_rating(user_id, service_id, request.remote_addr)
@@ -80,6 +105,11 @@ def get_star_rating_by_user_id():
 @website.route("/api/getUserName", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type'])
 def get_user_name():
+    """query a user by id
+
+    Returns:
+        json: user credentials
+    """
     response = db.get_user_by_id(int(request.values['user_id']))
     print(response)
     return {"username": response['login']}
@@ -88,6 +118,11 @@ def get_user_name():
 @website.route("/api/addServices/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
 def addServices():
+    """Add a new service provider to db
+
+    Returns:
+        json: status msg
+    """
     keys = ['name', 'street', 'no', 'zip', 'city', 'sector', 'additional_info']
     for k in keys:
         if request.values[k] =='' and k !='additional_info':
@@ -115,6 +150,11 @@ def addServices():
 @website.route("/api/addReview/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
 def add_review():
+    """
+        adds comments to a service provider
+    Returns:
+        json: status msg
+    """
     try:
         db.add_new_review(int(request.values['service_id']),int(request.values['user_id']),request.values['text'])
         return {"status": "OK" }  
@@ -126,6 +166,11 @@ def add_review():
 @website.route("/api/addStarRating/", methods=['POST'])
 @cross_origin(allow_headers=['Content-Type']) 
 def add_star_rating_to_service():
+    """add or update star review to a service provider
+
+    Returns:
+        json: status msg
+    """
     try:
         user_id = int(request.values['user_id'])
         service_id = int(request.values['service_id'])
@@ -145,6 +190,8 @@ def add_star_rating_to_service():
 @website.route("/api/addUsefullness/", methods=['POST'])  
 @cross_origin(allow_headers=['Content-Type']) 
 def update_usefulness_rate():
+    """update the usefullness rate of a comment
+    """
     try:
         r_id = request.values['r_id']     
         user_id = request.values['user_id']
@@ -158,12 +205,9 @@ def update_usefulness_rate():
 def after_request(response):
     """Buids request Header for CORS response
     by https://kurianbenoy.com/2021-07-04-CORS/
-    Args:
-        response (_type_): _description_
-    Returns:
-        _type_: _description_
+
     """
-    allowed_origins= ['http://127.0.0.1:3000','http://localhost']
+    allowed_origins= ['http://127.0.0.1:3000','http://localhost'] 
     if allowed_origins == "*":
             response.headers['Access-Control-Allow-Origin'] = "*"
     else:

@@ -37,7 +37,15 @@ class Database:
             pw_hash = md5(pw.encode()).hexdigest()
         return self.db.User.find_one({'login': login, 'pw': pw_hash})
 
-    def get_user_by_id(self, uid):
+    def get_user_by_id(self, uid) -> dict:
+        """Returns informations about a user identified by id
+
+        Args:
+            uid (int): user id
+
+        Returns:
+            dict: user information
+        """
         return self.db.User.find_one({'uid': uid})
 
     def get_user_data(self, login: str, pw: str) -> dict:
@@ -136,6 +144,14 @@ class Database:
         return True
     
     def get_star_ratings(self, service_id: int) -> list:
+        """get the list of users who gave a rating
+
+        Args:
+            service_id (int): id of service provider
+
+        Returns:
+            list: list of users 
+        """
         service = list(self.db.Services.find({"sid": service_id}))[0]['ratings']
         return service
         
@@ -145,7 +161,6 @@ class Database:
             if rating field exists, it will add or update a rating-obj for this user
         """
         save_id = self.convert_uid(user_id, ip)
-        #print(user_id, save_id)
         cursor = list(self.db.Services.find( {"sid": service_id, "ratings": {"$exists": True}}) )
         if (len(cursor) > 0):
             cursor = list(self.db.Services.find({"sid": service_id, "ratings":{"$elemMatch": {"user_id": save_id}}}))
@@ -170,6 +185,17 @@ class Database:
     
     
     def update_review_usefulness_rate(self, r_id: int,user_id: int, ip:str) -> bool:
+        """Update the usefullness rate of a comment
+        ip adddress to identify anon user
+
+        Args:
+            r_id (int): review id
+            user_id (int): user id
+            ip (str): user ip address
+
+        Returns:
+            bool: returns True for success
+        """
         user_id = self.convert_uid(user_id, ip)
         cursor = list(self.db.Reviews.find({"rid": r_id, "usefulness_rate":  user_id}))
         if (len(cursor) > 0 ): 
@@ -179,6 +205,17 @@ class Database:
         return True
     
     def get_user_rating(self, u_id: int, s_id: int, ip:str) -> int:
+        """ 
+        get the rating the user has given to the service
+        ip adddress to identify anon user
+        Args:
+            u_id (int): user id
+            s_id (int): servide id
+            ip (str): user ip
+
+        Returns:
+            int: _description_
+        """
         u_id = self.convert_uid(u_id, ip)
         result = list(self.db.Services.find({"sid":s_id, "ratings.user_id":u_id } ))
         if len(result) ==0:
@@ -194,11 +231,12 @@ class Database:
     def convert_uid(self, id: int, ip:str):
         """The anon-user has id 1. With this as input, a md5-hash of the users ip will be returned for recognizing in db
         
-        lese: returns user id
+        else: returns user id
 
         Args:
             id (int): user_id
             ip (str): ip address of user
+        Rerurns:: id oder ip-hash
         """
         if id != 1:
             return id
