@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 import json
 
+#This has to be run to initialize the Database with data from "database_example_data"
+
 if __name__ == '__main__':
     with open('mongo_db_config.json') as f:
         settings = json.load(f)

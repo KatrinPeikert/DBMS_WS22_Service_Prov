@@ -33,7 +33,7 @@ export default function LoginPage({ setToken }) {
     }
     return (
 
-        <div class="bg-image background ">
+        <div >
             <div class="row">
                 <h2 class="header-login">Web application to review service providers</h2> <hr></hr>
             </div>

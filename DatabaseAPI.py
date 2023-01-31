@@ -13,7 +13,7 @@ def fuzzy_word_similarity(search_string:str, documents:list) -> list:
         serv_p = doc["name"]
         fuzzy_sim.append((dist(search_string, serv_p), doc ))
     fuzzy_sim.sort(key=lambda x: x[0])
-    result = list(dict.fromkeys(([i[1]['name'] for i in fuzzy_sim])))  #to get disitnct values
+    result = list(dict.fromkeys(([i[1]['name'] for i in fuzzy_sim])))  #to get distinct values
     if len(result) > 10:
         return result[:9]   
     return result
@@ -199,32 +199,8 @@ class Database:
         Args:
             id (int): user_id
             ip (str): ip address of user
-
-        Returns:
-            _type_: _description_
         """
         if id != 1:
             return id
         else:
             return str(md5(str(ip).encode()).hexdigest())
-    
-    
-
-            
-#passwords = username
-
-if __name__ == '__main__':
-    db = Database()
-    print(db.get_user_rating(5, 1, "bla"))
-    print('User testing:')
-    user = db.get_user_data('anon', 'anon')
-    print(f'User information: {user}')
-    #db.set_user("mueller", "mueller")
-    print("Check Services")
-    print(db.get_service_prov("Euronycs"))
-    print("Add Services")
-    #print(db.set_service_prov(name="Patisserie Antoinette", address={"street": "Pariser Allee", "number": 16, "area_code": 45678, "city": "Frankfurt"},sector="Food", additional_info={"store_owner": "Maria Schmitz"}))
-    print("Check Reviews")
-    #print(db.get_reviews(service_id=1))
-    print("Add Review")
-    #print(db.add_new_review(3,2, "Love the Cake!"))

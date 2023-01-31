@@ -11,12 +11,6 @@ website.register_blueprint(auth.auth)
 website.secret_key = 'this is a very secret key'
 
 
-    
-@website.route("/")
-def show_user(user_name = "user1"):
-    user = db.get_user_data(login=user_name, pw=user_name)
-    return render_template("test_page.html", data=user)
-
 
 @website.route("/api/getServices/", methods=['GET'])
 @cross_origin(allow_headers=['Content-Type']) # to allow api-access to this route
@@ -147,14 +141,7 @@ def add_star_rating_to_service():
             "status": "error",
             "message": str(err)
         }
-"""        
-@website.route("/api/get_usefulness_rate/", methods=['GET'])  
-@cross_origin(allow_headers=['Content-Type']) 
-def get_review_usefulness_rate():
-    r_id = request.values['r_id']     
-    num = db.get_usefulness_rate(r_id)
-    return num
-"""
+
 @website.route("/api/addUsefullness/", methods=['POST'])  
 @cross_origin(allow_headers=['Content-Type']) 
 def update_usefulness_rate():
@@ -204,15 +191,17 @@ def password_insecure(password_candidate:str) -> bool:
     return password_insecure
 
 
-
+# routine for adding a new user when they try to register
 @website.route("/add_new_user", methods=['POST'])
 def add_new_user():
     if request.method == 'POST':
         username = str(request.json["user"])
         password = str(request.json["passw"])
+        # checking password security:
         if password_insecure(password):
             return jsonify({"user_status": "passw_error"})
         is_user_set = db.set_user(username, password)
+        # checking if login name already in use
         if is_user_set:
             return jsonify({"user_status": "success"})
         else:
