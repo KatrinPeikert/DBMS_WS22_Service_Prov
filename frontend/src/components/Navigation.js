@@ -17,24 +17,23 @@ background-color: darkgrey;
         text-decoration: none;
         font-weight: bold;
         font-size: 1.1em;
-        color: #040F0F;
+        color: #040F0F !important;
     }
-    a:visited {
-        color: #A2C5AC;
-    }
+   
     a:hover,
     a:focus {
-        color: #880D1E;
+        color: #880D1E !important;
     }
     overflow: hidden;
 `;
-
+//nav-bar:
 const Navigation = () => {
     const navigate = useNavigate();
     async function logoutUser() {
 
 
         sessionStorage.removeItem("token");
+        //redirect user by logout
         return fetch('/auth/logout', {
             method: 'POST',
             headers: {
@@ -63,10 +62,11 @@ const Navigation = () => {
             <NavListStyle>
 
                 <div><b>Navigation:</b>
-                    <Link to="/">Home</Link>  |
-                    <Link to="/search">Search </Link>
-                    |  <Link to="/addService">Add a new service</Link>
-                    | <Link onClick={LogOut}>Logout</Link></div>
+                    <Link to="/">Home </Link>  |
+                    <Link to="/search"> Search </Link>
+                    |  <Link to="/addService"> Add a new service </Link>
+                    | <Link onClick={LogOut}> Logout </Link>
+                    | <Link to="/disclaimer"> Disclaimer </Link></div>
 
 
             </NavListStyle>
@@ -75,20 +75,3 @@ const Navigation = () => {
 };
 export default Navigation;
 
-/* styled nav old:
-padding: 1em;
-    width: 100%;
-
-    padding-top: 100px;
-    background-color: #D3D5D4; 
-    overflow: hidden !important;   
-    @media (max-width: 700px) {
-        padding-top: 160px;
-    }
-    @media (min-width: 700px) {
-        position: fixed;
-        width: 220px;
-        height: calc(100%);
-        overflow-y: scroll;
-    }
-*/

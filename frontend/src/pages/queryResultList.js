@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import cors from "cors";
 import { 
     Link,
     useParams,
@@ -14,13 +12,16 @@ import Rating from "../components/Rating"
 import DetailsButton from "../components/DetailsButton"  
 import FuzzyWordsList from "../components/FuzzyWordList"
 
+
+//shows a list of search results
 const GetServices = () =>{
-    //cors()
     const navigate =useNavigate()
 
     const {type, keyword} = useParams(); //given params to perform query
     const [services, setServices] = useState([]); //Database response
     console.log(type, keyword)
+
+    //api request:
     useEffect(() => {
             const fetchAllServices = async () => {
                 try {
@@ -41,13 +42,11 @@ const GetServices = () =>{
                     console.log("Api request: ", request);
                     const res = await axios.get(request,{
                         headers: {
-                           authorization: null , //das kann glaub ich raus
                            'Content-Type': 'application/json'
                         }}) ;
 
                     console.log("res", res)
-                    setServices(res)}
-                    
+                    setServices(res)}                    
                      
                  catch (error) {
                     console.log("error", error); 
@@ -58,9 +57,9 @@ const GetServices = () =>{
             }
             fetchAllServices();
     },[type, keyword, navigate] ); 
-    console.log("services: ", services)
-    console.log(services)
 
+
+    //show result list:
     try{  
             return <div>
                 <h1>Your results for the {type} "{keyword}":</h1>
@@ -84,6 +83,7 @@ const GetServices = () =>{
                 </div> 
                 </div>
     }
+    //if no nersices found, show error msg and similar keywords
     catch {
         return <><h2>No services found</h2>
         <FuzzyWordsList queryType={type} response={services.data}></FuzzyWordsList>

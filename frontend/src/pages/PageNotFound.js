@@ -1,4 +1,6 @@
 import React from "react";
+
+//error page for unknown urls:
 export default function FrontPage() {
 return (
   <>

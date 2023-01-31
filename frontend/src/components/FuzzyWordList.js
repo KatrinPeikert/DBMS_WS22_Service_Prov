@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+// if no servive is found, a list iof similar words is displayed:
 const FuzzyWordList = (probs) =>{    
     if (probs.queryType ==="name"){
         try {

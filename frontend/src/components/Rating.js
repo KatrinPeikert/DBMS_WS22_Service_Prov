@@ -4,13 +4,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+//displays star-rating:
 const Rating = (probs) => {
-    //const [time, setTime] = useState(new Date());
     const [rating, setRating] = useState(0);    
     const navigate = useNavigate();
 
+    //get rating:
     useEffect(() => {
-        //if called with loaded state
+        //on servie page, the rating will be part of probs:
         if (probs.hasOwnProperty('ratings')){
                             var s = 0;
                             try{
@@ -28,6 +29,7 @@ const Rating = (probs) => {
                             }
 
                             setRating(s);}
+        //otherwise, we get it from the api:
         else{
             const fetchRatings = async () => {
                 try {
@@ -37,15 +39,12 @@ const Rating = (probs) => {
                                     console.log("Api request: ", request);
                     const res = await axios.get(request,{
                                         headers: {
-                                           authorization: null , //das kann glaub ich raus
                                            'Content-Type': 'application/json'
                                         }}) ;
                                    
-                console.log("star rating response", res)  
                 setRating(res.data.rating)                      
                                     }      
                 catch (error){
-                    console.log("error fetching stars", error)
                     navigate("/error")
                 }
             
@@ -57,26 +56,24 @@ const Rating = (probs) => {
         }
     }, [probs, navigate])
     
-    console.log(rating);
     try {
             if (rating === 0){
                 return <>no ratings given</>
             }
+            //build a list of five stars according to the rating:
             const stars = parseInt(rating); //number of full stars
 
-
-            //var result = String.fromCodePoint(9733).repeat(stars)//"\u2605".repeat(stars);
-            var wStars = 5 -stars;
+            var wStars = 5 -stars; //number of empty stars
             var halfStar = 0;
+            //chekc if a half star should be displayed:
             if (rating - stars >= 0.5){
-                halfStar = 1; // 	"\u2BE8" //String.fromCodePoint(11243);
+                halfStar = 1; 
                 wStars =wStars -1;
             }
             const BStarMap = Array(stars).fill(0); 
             const HStarMap = Array(halfStar).fill(0); 
             const WStarMap = Array(wStars).fill(0);     
-
-            //result = result + "\u2606".repeat(wStars);
+            //expected output on service page:
             try{
             return <>
             {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
@@ -85,6 +82,7 @@ const Rating = (probs) => {
             <p ><small>{probs.ratings.length} user(s) rated.</small></p>
             </>
             }
+            //expected output by result list:
             catch (error){
                 return <>
                 {BStarMap.map((item,index)=>{return <span key={index}><BlackStar /></span>})}
@@ -101,6 +99,7 @@ const Rating = (probs) => {
            
 
         }
+    //output if no ratings a given:
     catch (error){
         console.log(error)
         return <>No ratings</>

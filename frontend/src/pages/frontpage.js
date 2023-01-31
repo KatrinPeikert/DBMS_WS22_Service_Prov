@@ -1,15 +1,16 @@
 import React, { useState, useEffect  } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-
+//display welcome msg on frontpage:
 const  FrontPage = (probs) => {
   const [username, setUsername] = useState("");
   const navigate =useNavigate();
 
-  useEffect(() => {
-  const getUserRating = async () => {
+  //get user name from backend
+  useEffect(() => {    
+  const getUserName = async () => {
     try {
       const request = 'http://127.0.0.1:5000/api/getUserName?' + new URLSearchParams({
         user_id: probs.token,
@@ -27,8 +28,8 @@ const  FrontPage = (probs) => {
   }
 
   }
-getUserRating();
-}, [])
+  getUserName();
+}, [probs, navigate])
 
 return (
   <>

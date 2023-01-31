@@ -10,13 +10,13 @@ import StarRatingButton from "../components/StarRatingbutton"
 import Rating from "../components/Rating"  
 
 
+//shows one service page 
 const ServicePage =  (probs) =>{
     const navigate =useNavigate()
 
-    const {id} = useParams(); //given params to perform query
+    const {id} = useParams(); //service id from params to perform query
 
-    //save quer results:
-    const [sid, setSid] = useState();
+    //save query results:
     const [name, setName] = useState();
     const [sector, setSector] = useState();
     const [ip_hash, setIphash] = useState();
@@ -47,7 +47,6 @@ const ServicePage =  (probs) =>{
                     }}) ;
 
                 //setService(res.data)
-                setSid(res.data.sid)
                 setName(res.data.name)
                 setSector(res.data.sector)
                 setIphash(res.data.ip_hash)
@@ -68,6 +67,7 @@ const ServicePage =  (probs) =>{
         }
     ,[id, navigate, reloader] ); 
 
+    //if service found:
     try {
         return <>
         <h2>{name}</h2>

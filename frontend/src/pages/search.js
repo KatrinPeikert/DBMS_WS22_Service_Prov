@@ -2,14 +2,16 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+
+//provides forms to search services by name or sector:
 const SearchPage = () => {
   const navigate =useNavigate()
+  //stores user input:
   const [query, setQuery] = useState({
     name:"", sector:""});
 
@@ -17,20 +19,20 @@ const SearchPage = () => {
     setQuery(prev=>({...prev, [e.target.name]: e.target.value }))
   };
 
-
+  //redirection for search by name
   const handleSubmitName =  (event) => {
-    //build api request from form
     event.preventDefault();
-    navigate("/query/name/" +query.name )
-  
+    navigate("/query/name/" +query.name )  
 
   }
+    //redirection for search by sector
   const handleSubmitSector=  (event) => {
     event.preventDefault();
     navigate("/query/sector/" +query.sector )
 
   }
 
+//retuns search form
 return (
   <Container className="Form">
  

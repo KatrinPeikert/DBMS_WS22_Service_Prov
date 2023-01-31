@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 
 
+//counts the number of users which ratet a comment usefull
+//probs.usefulness_rate : array of users who rated this comment
 const Counter = (probs) =>{
     const [num, setNum] = useState(0)
    

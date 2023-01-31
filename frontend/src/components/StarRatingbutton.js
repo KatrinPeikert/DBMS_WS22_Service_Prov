@@ -3,15 +3,18 @@ import "./StarRating.css"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {ChangableStar} from "./Stars"
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const StarRatingButton = (probs) =>{
     const navigate =useNavigate()
 
     const serviceId = probs.serviceId;
+    //store rating from actual user:
     const [rating, setRating] = useState(0);
+    //store hover position:
     const [hover, setHover] = useState(0);
 
+    //get rating given by user from backend:
     useEffect(() => {
 
       const getUserRating = async () => {
@@ -37,6 +40,7 @@ const StarRatingButton = (probs) =>{
     },[probs.user_id, probs.serviceId,navigate] )
 
 
+    //save new rating to backend:
     const StarClickhandler = async (index) =>{
         setRating(index);
         console.log(hover)
@@ -53,13 +57,11 @@ const StarRatingButton = (probs) =>{
             }
         catch (error){
             console.log(error);
-            navigate("/error")
-
-        
+            navigate("/error")        
     }
 
     }
-
+    //build row of 5 stars to give rating:
     return (
       <div className="star-rating">
         <b>Make a rating:</b>

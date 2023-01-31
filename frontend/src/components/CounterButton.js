@@ -1,21 +1,21 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+//button to rate a comment usefull
 const CounterButton = (probs) =>{
     const navigate =useNavigate()
 
-    //heck if rating is given by user
+    //check if a rating is allready given by user
     var used = false;
     if (probs.usefulness_rate.includes(probs.rating_id)){
         used = true;
 
     }
-    console.log("used", used)
 
-
-    const sendVoting = async (r_id, user_id ) =>{
+        //send voting to api
+        const sendVoting = async (r_id, user_id ) =>{
         try {
             const request = 'http://127.0.0.1:5000/api/addUsefullness/?' + new URLSearchParams({
                 user_id: user_id, 
@@ -31,6 +31,7 @@ const CounterButton = (probs) =>{
 
 
     }}
+    //chosse button type if rated or not
     if ( used=== false){
         return <Button variant="btn btn-secondary" onClick={() =>{sendVoting(probs.r_id, probs.user_id)}}>You found this usefull?</ Button >
     }

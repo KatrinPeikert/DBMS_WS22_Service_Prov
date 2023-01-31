@@ -1,16 +1,16 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-
+//form to wirte comments for service provider
 const WriteComment =(probs) =>{
     const navigate =useNavigate()
-
+    //save comment text
     const [comment, setComment] = useState({
         commentText:""
       });
@@ -20,6 +20,7 @@ const WriteComment =(probs) =>{
                 
 
       };
+      //push comment to backend
     const clickHander = async(e) =>{
         e.preventDefault();    
         if (comment.commentText !== ""){
@@ -43,6 +44,7 @@ const WriteComment =(probs) =>{
         }
       }
     }
+    //comment writing form:
     return    <>      
     <h3>Write a new comment:</h3>
     

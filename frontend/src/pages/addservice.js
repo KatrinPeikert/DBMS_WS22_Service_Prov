@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,30 +11,32 @@ import Button from 'react-bootstrap/Button';
 const AddService = () => {
   const navigate = useNavigate()
 
+  //save form state:
   const [Service, setService] = useState({
     name: "", sector: "", street: "", no: "", city: "", zip: "",additionalInfo: []
   });
-  const [exists, setExists] = useState(false)  //to display status msg
+  const [exists, setExists] = useState(false)  //to display status msg if user adds an existing provider
 
 
 
-
+  //handles form state
   const changeHandler = (e) => {
     setService(prev => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(Service)
 
   };
+
+  //push new service to backend:
   const clickHander = async (e) => {
     e.preventDefault();
 
     try {
-      console.log("add info", Service.additionalInfo)
+      //cleans list of additional infos and create info string:
       var additionalInfo_cleaned = Service.additionalInfo.filter((elem) => {return elem.name !== "" && elem.value !== ""});
       additionalInfo_cleaned = additionalInfo_cleaned.map((elem) =>{
         return String(elem.name) + "|~|" + String(elem.value)
 
       }).join('~~~');
-      console.log("cleanded", additionalInfo_cleaned);
 
       const request = 'http://127.0.0.1:5000/api/addServices?' + new URLSearchParams({
         name: Service.name,
@@ -94,6 +96,7 @@ const AddService = () => {
       
       
   }
+  //remove additional info field as onClick-method:
   const removeField = (event) =>{
     event.preventDefault();
     var index =  event.target.id.split("_")[2]
@@ -107,8 +110,6 @@ const AddService = () => {
     }
     setService(Service)
     document.getElementById("formgroup_"+ index).remove()
-
-
 
   }
 
