@@ -22,3 +22,6 @@ Jan Miehle
 # Used Color scheme:
 https://coolors.co/d3d5d4-a2c5ac-040f0f-880d1e-7189ff
 
+# Link to github-repository
+https://github.com/KatrinPeikert/DBMS_WS22_Service_Prov
+
