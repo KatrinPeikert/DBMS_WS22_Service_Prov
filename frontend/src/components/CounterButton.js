@@ -23,7 +23,6 @@ const CounterButton = (probs) =>{
               });
             await axios.post(request);
             probs.switch()
-            //window.location.reload();
 
             }
         catch (error){
@@ -33,10 +32,10 @@ const CounterButton = (probs) =>{
 
     }}
     if ( used=== false){
-        return <Button variant="btn btn-secondary" onClick={() =>{sendVoting(probs.r_id, probs.user_id)}}>you found this usefull?</ Button >
+        return <Button variant="btn btn-secondary" onClick={() =>{sendVoting(probs.r_id, probs.user_id)}}>You found this usefull?</ Button >
     }
     else{
-        return <Button variant="light" className="notUsefullButton"  onClick={() =>{sendVoting(probs.r_id, probs.user_id)}}>you found this usefull.</ Button >
+        return <Button variant="light" className="notUsefullButton"  onClick={() =>{sendVoting(probs.r_id, probs.user_id)}}>You found this usefull.</ Button >
 
     }
 }

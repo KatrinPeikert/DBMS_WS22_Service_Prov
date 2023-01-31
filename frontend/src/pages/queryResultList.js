@@ -57,13 +57,13 @@ const GetServices = () =>{
 
             }
             fetchAllServices();
-    },[type, keyword] ); 
+    },[type, keyword, navigate] ); 
     console.log("services: ", services)
     console.log(services)
 
     try{  
             return <div>
-                <h1>Your search-results for the {type} "{keyword}":</h1>
+                <h1>Your results for the {type} "{keyword}":</h1>
                 <br />
                 <div>
                 <table class="table table-striped">
@@ -85,14 +85,11 @@ const GetServices = () =>{
                 </div>
     }
     catch {
-        return <><h2>No Services found</h2>
+        return <><h2>No services found</h2>
         <FuzzyWordsList queryType={type} response={services.data}></FuzzyWordsList>
         <br /><br />
         <p><Link to ="/search"><button type="button" class="btn btn-secondary">Go back</button></Link>   <Link to ="/addService"><button type="button" class="btn btn-secondary">Create a new service</button></Link><br />
         </p> </>
     }
     }
-//{services.data.sid}
 export default GetServices;
-//
-//{services.data[0].map((s) =><tr><td>{s.sid}</td><td>{s.name}</td><td>{s.sector}</td><td>{s.address[0].street} {s.address[0].number}, {s.address[0].city}</td>asd<td></td></tr>  )}

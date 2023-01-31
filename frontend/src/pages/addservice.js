@@ -186,7 +186,7 @@ const AddService = () => {
           </Form.Group>
         
         </Form>
-        {exists && <b>This Service already exists.</b>}
+        {exists && <b>This service already exists.</b>}
       </Row>
 
 
